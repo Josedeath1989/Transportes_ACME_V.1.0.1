@@ -33,7 +33,7 @@
           <a class="nav-link" [routerLink]="['/vehicles']" [class.active]="isActiveRoute('/vehicles')" title="Vehicles" aria-label="Go to Vehicles">
             <i class="fas fa-truck" aria-hidden="true"></i>
             <span>Vehículos</span>
-            <span class="badge badge-pill badge-primary ml-auto" [attr.aria-label]="{{ stats.vehicles + ' vehicles' }}">{{ stats.vehicles }}</span>
+            <span class="badge badge-pill badge-primary ml-auto">{{ stats.vehicles }}</span>
           </a>
         </li>
 
@@ -41,7 +41,7 @@
           <a class="nav-link" [routerLink]="['/conductors']" [class.active]="isActiveRoute('/conductors')" title="Conductors" aria-label="Go to Conductors">
             <i class="fas fa-user-tie" aria-hidden="true"></i>
             <span>Conductores</span>
-            <span class="badge badge-pill badge-success ml-auto" [attr.aria-label]="{{ stats.conductors + ' conductors' }}">{{ stats.conductors }}</span>
+            <span class="badge badge-pill badge-success ml-auto">{{ stats.conductors }}</span>
           </a>
         </li>
 
@@ -49,7 +49,7 @@
           <a class="nav-link" [routerLink]="['/propietarios']" [class.active]="isActiveRoute('/propietarios')" title="Propietarios" aria-label="Go to Propietarios">
             <i class="fas fa-user-circle" aria-hidden="true"></i>
             <span>Propietarios</span>
-            <span class="badge badge-pill badge-info ml-auto" [attr.aria-label]="{{ stats.propietarios + ' propietarios' }}">{{ stats.propietarios }}</span>
+            <span class="badge badge-pill badge-info ml-auto">{{ stats.propietarios }}</span>
           </a>
         </li>
 
@@ -57,7 +57,7 @@
           <a class="nav-link" [routerLink]="['/reports']" [class.active]="isActiveRoute('/reports')" title="Reports" aria-label="Go to Reports">
             <i class="fas fa-chart-bar" aria-hidden="true"></i>
             <span>Reportes</span>
-            <span class="badge badge-pill badge-warning ml-auto" [attr.aria-label]="{{ stats.reports + ' reports' }}">{{ stats.reports }}</span>
+            <span class="badge badge-pill badge-warning ml-auto">{{ stats.reports }}</span>
           </a>
         </li>
 
