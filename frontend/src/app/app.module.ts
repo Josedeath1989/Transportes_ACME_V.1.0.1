@@ -39,6 +39,7 @@ import { ReportsComponent } from './components/reports/reports.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { SidebarComponent } from './components/shared/sidebar/sidebar.component';
+import { ModalComponent } from './components/shared/modal/modal.component';
 
 // Services
 import { AuthService } from './auth.service';
@@ -93,7 +94,8 @@ const routes: Routes = [
     ReportsComponent,
     LoginComponent,
     NavbarComponent,
-    SidebarComponent
+    SidebarComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,

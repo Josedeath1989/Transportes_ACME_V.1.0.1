@@ -3,10 +3,35 @@ import { VehicleService } from '../../services/vehicle.service';
 import { ConductorService } from '../../services/conductor.service';
 import { PropietarioService } from '../../services/propietario.service';
 import { ReportService } from '../../services/report.service';
+import { ModalService } from '../../services/modal.service';
 import { Router } from '@angular/router';
-import { Subject, forkJoin } from 'rxjs';
+import { Subject, forkJoin, of } from 'rxjs';
 import { takeUntil, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { MatDialogRef } from '@angular/material/dialog';
+import { Vehicle } from '../../models/vehicle.model';
+import { Conductor } from '../../models/conductor.model';
+import { Propietario } from '../../models/propietario.model';
+
+// Interfaces para tipado fuerte
+interface DashboardStats {
+  vehicles: number;
+  conductors: number;
+  propietarios: number;
+  reports: number;
+}
+
+interface RecentActivity {
+  type: 'vehicle' | 'conductor' | 'propietario' | 'report';
+  icon: string;
+  description: string;
+  time: string;
+}
+
+interface ModalResult<T> {
+  success: boolean;
+  data?: T;
+  error?: string;
+}
 
 @Component({
   selector: 'app-dashboard',
@@ -52,15 +77,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
   ];
 
-  modalTitle = '';
-  modalType = '';
-  showModal = false;
-
   constructor(
     private vehicleService: VehicleService,
     private conductorService: ConductorService,
     private propietarioService: PropietarioService,
     private reportService: ReportService,
+    private modalService: ModalService,
     private router: Router
   ) {}
 
@@ -130,28 +152,75 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   openVehicleModal(): void {
-    this.modalTitle = 'Nuevo Vehículo';
-    this.modalType = 'vehicle';
-    this.showModal = true;
+    const dialogRef = this.modalService.openVehicleModal();
+    
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadStats();
+        this.addRecentActivity('vehicle', 'Nuevo vehículo registrado');
+      }
+    });
   }
 
   openConductorModal(): void {
-    this.modalTitle = 'Nuevo Conductor';
-    this.modalType = 'conductor';
-    this.showModal = true;
+    const dialogRef = this.modalService.openConductorModal();
+    
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadStats();
+        this.addRecentActivity('conductor', 'Nuevo conductor registrado');
+      }
+    });
   }
 
   openPropietarioModal(): void {
-    this.modalTitle = 'Nuevo Propietario';
-    this.modalType = 'propietario';
-    this.showModal = true;
+    const dialogRef = this.modalService.openPropietarioModal();
+    
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadStats();
+        this.addRecentActivity('propietario', 'Nuevo propietario registrado');
+      }
+    });
   }
 
-  closeModal(): void {
-    this.showModal = false;
+  private addRecentActivity(type: RecentActivity['type'], description: string): void {
+    this.recentActivities.unshift({
+      type,
+      icon: this.getActivityIcon(type),
+      description,
+      time: 'Hace un momento'
+    });
+    
+    // Mantener solo las últimas 4 actividades
+    if (this.recentActivities.length > 4) {
+      this.recentActivities.pop();
+    }
+  }
+
+  private getActivityIcon(type: RecentActivity['type']): string {
+    const icons: Record<RecentActivity['type'], string> = {
+      vehicle: 'fas fa-truck',
+      conductor: 'fas fa-user-tie',
+      propietario: 'fas fa-user-circle',
+      report: 'fas fa-chart-bar'
+    };
+    return icons[type] || 'fas fa-info-circle';
   }
 
   refreshData(): void {
     this.loadStats();
+  }
+
+  // Método para manejo de errores centralizado
+  private handleError(error: any, context: string): void {
+    console.error(`Error en ${context}:`, error);
+    this.error = `Error al ${context}. Por favor, intente nuevamente.`;
+    this.isLoading = false;
+  }
+
+  // Método para limpiar errores
+  clearError(): void {
+    this.error = null;
   }
 }

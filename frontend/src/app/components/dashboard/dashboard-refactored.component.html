@@ -2,13 +2,29 @@
   <!-- Header Section -->
   <div class="dashboard-header">
     <h1><i class="fas fa-tachometer-alt"></i> Panel de Control</h1>
-    <p class="text-muted">Bienvenido al sistema de gestión de transportes</p>
+    <p class="text-muted">Sistema de gestión moderno de transportes</p>
   </div>
 
-  <!-- Stats Cards -->
-  <div class="row mb-4">
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Cargando...</span>
+    </div>
+    <p>Cargando estadísticas...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !isLoading" class="alert alert-danger" role="alert">
+    <i class="fas fa-exclamation-triangle"></i> {{ error }}
+    <button class="btn btn-sm btn-outline-danger ml-2" (click)="refreshDashboard()">
+      <i class="fas fa-redo"></i> Reintentar
+    </button>
+  </div>
+
+  <!-- Stats Cards - Only show when not loading -->
+  <div *ngIf="!isLoading" class="row mb-4">
     <div class="col-md-3 mb-3">
-      <div class="stat-card vehicles">
+      <div class="stat-card vehicles" (click)="openVehicleModal()" style="cursor: pointer;">
         <div class="stat-icon">
           <i class="fas fa-truck"></i>
         </div>
@@ -17,15 +33,15 @@
           <p>Vehículos</p>
         </div>
         <div class="stat-footer">
-          <a [routerLink]="['/vehicles']" class="text-decoration-none">
-            <small>Ver todos <i class="fas fa-arrow-right"></i></small>
-          </a>
+          <small class="text-primary">
+            <i class="fas fa-plus"></i> Agregar nuevo
+          </small>
         </div>
       </div>
     </div>
 
     <div class="col-md-3 mb-3">
-      <div class="stat-card conductors">
+      <div class="stat-card conductors" (click)="openConductorModal()" style="cursor: pointer;">
         <div class="stat-icon">
           <i class="fas fa-user-tie"></i>
         </div>
@@ -34,15 +50,15 @@
           <p>Conductores</p>
         </div>
         <div class="stat-footer">
-          <a [routerLink]="['/conductors']" class="text-decoration-none">
-            <small>Ver todos <i class="fas fa-arrow-right"></i></small>
-          </a>
+          <small class="text-success">
+            <i class="fas fa-plus"></i> Agregar nuevo
+          </small>
         </div>
       </div>
     </div>
 
     <div class="col-md-3 mb-3">
-      <div class="stat-card propietarios">
+      <div class="stat-card propietarios" (click)="openPropietarioModal()" style="cursor: pointer;">
         <div class="stat-icon">
           <i class="fas fa-user-circle"></i>
         </div>
@@ -51,9 +67,9 @@
           <p>Propietarios</p>
         </div>
         <div class="stat-footer">
-          <a [routerLink]="['/propietarios']" class="text-decoration-none">
-            <small>Ver todos <i class="fas fa-arrow-right"></i></small>
-          </a>
+          <small class="text-info">
+            <i class="fas fa-plus"></i> Agregar nuevo
+          </small>
         </div>
       </div>
     </div>
@@ -69,7 +85,9 @@
         </div>
         <div class="stat-footer">
           <a [routerLink]="['/reports']" class="text-decoration-none">
-            <small>Ver todos <i class="fas fa-arrow-right"></i></small>
+            <small class="text-warning">
+              <i class="fas fa-arrow-right"></i> Ver todos
+            </small>
           </a>
         </div>
       </div>
@@ -77,7 +95,7 @@
   </div>
 
   <!-- Quick Actions -->
-  <div class="row">
+  <div *ngIf="!isLoading" class="row">
     <div class="col-md-8">
       <div class="card">
         <div class="card-header">
@@ -86,18 +104,21 @@
         <div class="card-body">
           <div class="row">
             <div class="col-md-6 mb-3">
-              <button class="btn btn-primary btn-block" (click)="openVehicleModal()">
+              <button class="btn btn-primary btn-block" (click)="openVehicleModal()" [disabled]="isModalLoading">
                 <i class="fas fa-plus"></i> Nuevo Vehículo
+                <span *ngIf="isModalLoading" class="spinner-border spinner-border-sm ml-2"></span>
               </button>
             </div>
             <div class="col-md-6 mb-3">
-              <button class="btn btn-success btn-block" (click)="openConductorModal()">
+              <button class="btn btn-success btn-block" (click)="openConductorModal()" [disabled]="isModalLoading">
                 <i class="fas fa-plus"></i> Nuevo Conductor
+                <span *ngIf="isModalLoading" class="spinner-border spinner-border-sm ml-2"></span>
               </button>
             </div>
             <div class="col-md-6 mb-3">
-              <button class="btn btn-info btn-block" (click)="openPropietarioModal()">
+              <button class="btn btn-info btn-block" (click)="openPropietarioModal()" [disabled]="isModalLoading">
                 <i class="fas fa-plus"></i> Nuevo Propietario
+                <span *ngIf="isModalLoading" class="spinner-border spinner-border-sm ml-2"></span>
               </button>
             </div>
             <div class="col-md-6 mb-3">
@@ -114,6 +135,9 @@
       <div class="card">
         <div class="card-header">
           <h5><i class="fas fa-clock"></i> Últimas Actividades</h5>
+          <button class="btn btn-sm btn-outline-secondary float-right" (click)="refreshDashboard()">
+            <i class="fas fa-sync-alt"></i>
+          </button>
         </div>
         <div class="card-body">
           <div class="activity-list">
@@ -131,7 +155,15 @@
       </div>
     </div>
   </div>
+
+  <!-- Modal Error Alert -->
+  <div *ngIf="modalError" class="alert alert-danger alert-dismissible fade show" role="alert">
+    <i class="fas fa-exclamation-triangle"></i> {{ modalError }}
+    <button type="button" class="close" (click)="modalError = null">
+      <span>&times;</span>
+    </button>
+  </div>
 </div>
 
-<!-- Los modales ahora se manejan a través de ModalService con Angular Material Dialog -->
-<!-- No es necesario este HTML ya que Angular Material Dialog crea sus propios modales -->
+<!-- Modal Backdrop -->
+<div *ngIf="isModalLoading" class="modal-backdrop fade show"></div>

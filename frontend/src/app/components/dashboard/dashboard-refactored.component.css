@@ -1,0 +1,248 @@
+/* Modern Dashboard Styles */
+.dashboard-container {
+  padding: 2rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: calc(100vh - 120px);
+}
+
+.dashboard-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.dashboard-header h1 {
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-header p {
+  font-size: 1.1rem;
+  color: #7f8c8d;
+}
+
+/* Loading States */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+.loading-container .spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Stats Cards */
+.stat-card {
+  background: white;
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.stat-card.vehicles {
+  border-left: 4px solid #3498db;
+}
+
+.stat-card.conductors {
+  border-left: 4px solid #2ecc71;
+}
+
+.stat-card.propietarios {
+  border-left: 4px solid #9b59b6;
+}
+
+.stat-card.reports {
+  border-left: 4px solid #f39c12;
+}
+
+.stat-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  opacity: 0.8;
+}
+
+.stat-card.vehicles .stat-icon { color: #3498db; }
+.stat-card.conductors .stat-icon { color: #2ecc71; }
+.stat-card.propietarios .stat-icon { color: #9b59b6; }
+.stat-card.reports .stat-icon { color: #f39c12; }
+
+.stat-content h3 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0;
+  color: #2c3e50;
+}
+
+.stat-content p {
+  margin: 0;
+  color: #7f8c8d;
+  font-size: 1.1rem;
+}
+
+.stat-footer {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #ecf0f1;
+}
+
+/* Activity List */
+.activity-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.activity-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #ecf0f1;
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+}
+
+.activity-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+  color: white;
+}
+
+.activity-vehicle { background-color: #3498db; }
+.activity-conductor { background-color: #2ecc71; }
+.activity-propietario { background-color: #9b59b6; }
+.activity-report { background-color: #f39c12; }
+
+.activity-content p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* Buttons */
+.btn {
+  border-radius: 25px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Cards */
+.card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.card-header {
+  background: white;
+  border-bottom: 1px solid #ecf0f1;
+  border-radius: 15px 15px 0 0 !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 1rem;
+  }
+  
+  .dashboard-header h1 {
+    font-size: 2rem;
+  }
+  
+  .stat-card {
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .stat-content h3 {
+    font-size: 2rem;
+  }
+}
+
+/* Modal Styles */
+.modal-backdrop {
+  z-index: 1040;
+}
+
+/* Animation Classes */
+.fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Custom Scrollbar */
+.activity-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.activity-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.activity-list::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.activity-list::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Accessibility */
+[role="button"] {
+  cursor: pointer;
+}
+
+[role="button"]:focus {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}
+
+/* Alert Styles */
+.alert {
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.alert-danger .btn-close {
+  filter: invert(1) grayscale(100%) brightness(0.7);
+}

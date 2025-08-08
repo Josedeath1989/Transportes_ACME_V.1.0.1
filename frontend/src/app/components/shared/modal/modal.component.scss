@@ -1,0 +1,95 @@
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 1.5rem 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  
+  &.no-border {
+    border-bottom: none;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .close-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    color: #666;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: #333;
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+  }
+}
+
+.modal-content {
+  padding: 1.5rem;
+  max-height: 70vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.modal-actions {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .modal-header {
+    padding: 1rem;
+    
+    h2 {
+      font-size: 1.25rem;
+    }
+  }
+
+  .modal-content {
+    padding: 1rem;
+  }
+
+  .modal-actions {
+    padding: 0.75rem 1rem;
+  }
+}
+
+// Animation
+::ng-deep .custom-modal-container {
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+::ng-deep .custom-backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

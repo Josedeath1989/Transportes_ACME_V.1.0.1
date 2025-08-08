@@ -1,0 +1,93 @@
+// Estilos globales para modales
+@import '~@angular/material/theming';
+
+// Variables de colores
+$modal-backdrop-color: rgba(0, 0, 0, 0.5);
+$modal-border-color: #e0e0e0;
+$modal-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+
+// Clases personalizadas para modales
+.custom-modal-container {
+  border-radius: 8px;
+  box-shadow: $modal-shadow;
+  background-color: white;
+  overflow: hidden;
+  
+  .mat-dialog-container {
+    padding: 0;
+    overflow: hidden;
+  }
+}
+
+.custom-backdrop {
+  background-color: $modal-backdrop-color;
+  backdrop-filter: blur(2px);
+}
+
+// Tamaños de modal
+.modal-sm {
+  max-width: 400px;
+}
+
+.modal-md {
+  max-width: 600px;
+}
+
+.modal-lg {
+  max-width: 800px;
+}
+
+.modal-xl {
+  max-width: 1000px;
+}
+
+// Animaciones
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes modalSlideOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.9);
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .custom-modal-container {
+    margin: 1rem;
+    max-width: calc(100vw - 2rem);
+  }
+}
+
+// Scrollbar personalizada
+.modal-content {
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+
+    &:hover {
+      background: #a8a8a8;
+    }
+  }
+}
