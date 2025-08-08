@@ -4,10 +4,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
-import { ConductorService } from '../../../services/conductor.service';
-import { PropietarioService } from '../../../services/propietario.service';
-import { Conductor } from '../../../models/conductor.model';
-import { Propietario } from '../../../models/propietario.model';
 
 @Component({
   selector: 'app-vehicle-form',
@@ -18,32 +14,21 @@ export class VehicleFormComponent implements OnInit {
   form!: FormGroup;
   isEditMode = false;
   loading = false;
+  conductores: any[] = [];
+  propietarios: any[] = [];
   private apiUrl = `${environment.apiUrl}/vehicles`;
-  
-  conductores: Conductor[] = [];
-  propietarios: Propietario[] = [];
-  tiposVehiculo = [
-    { value: 'particular', label: 'Particular' },
-    { value: 'publico', label: 'Público' }
-  ];
-  estados = [
-    { value: 'activo', label: 'Activo' },
-    { value: 'inactivo', label: 'Inactivo' }
-  ];
 
   constructor(
     private http: HttpClient,
     private toastr: ToastrService,
-    private conductorService: ConductorService,
-    private propietarioService: PropietarioService,
     public dialogRef: MatDialogRef<VehicleFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
   ngOnInit(): void {
-    this.initializeForm();
     this.loadConductores();
     this.loadPropietarios();
+    this.initializeForm();
     
     if (this.data && this.data.vehicle) {
       this.isEditMode = true;
@@ -55,25 +40,30 @@ export class VehicleFormComponent implements OnInit {
     this.form = new FormGroup({
       placa: new FormControl('', [
         Validators.required,
-        Validators.maxLength(7)
+        Validators.minLength(3),
+        Validators.maxLength(10),
+        Validators.pattern(/^[A-Za-z0-9-]+$/)
       ]),
       color: new FormControl('', [
         Validators.required,
-        Validators.maxLength(50)
+        Validators.minLength(2),
+        Validators.maxLength(30),
+        Validators.pattern(/^[A-Za-z\s]+$/)
       ]),
       marca: new FormControl('', [
         Validators.required,
-        Validators.maxLength(50)
+        Validators.minLength(2),
+        Validators.maxLength(50),
+        Validators.pattern(/^[A-Za-z\s]+$/)
       ]),
-      tipo_vehiculo: new FormControl('particular', Validators.required),
-      conductor_id: new FormControl(null, Validators.required),
-      propietario_id: new FormControl(null, Validators.required),
-      estado: new FormControl('activo', Validators.required)
+      tipo_vehiculo: new FormControl('', Validators.required),
+      conductor_id: new FormControl('', Validators.required),
+      propietario_id: new FormControl('', Validators.required)
     });
   }
 
   loadConductores(): void {
-    this.conductorService.getConductores().subscribe({
+    this.http.get(`${environment.apiUrl}/conductores`).subscribe({
       next: (response: any) => {
         this.conductores = response.data || response;
       },
@@ -84,7 +74,7 @@ export class VehicleFormComponent implements OnInit {
   }
 
   loadPropietarios(): void {
-    this.propietarioService.getPropietarios().subscribe({
+    this.http.get(`${environment.apiUrl}/propietarios`).subscribe({
       next: (response: any) => {
         this.propietarios = response.data || response;
       },
@@ -92,16 +82,6 @@ export class VehicleFormComponent implements OnInit {
         this.toastr.error('Error al cargar propietarios');
       }
     });
-  }
-
-  getConductorNombreCompleto(conductor: Conductor): string {
-    const segundoNombre = conductor.segundo_nombre ? ` ${conductor.segundo_nombre}` : '';
-    return `${conductor.primer_nombre}${segundoNombre} ${conductor.apellidos}`;
-  }
-
-  getPropietarioNombreCompleto(propietario: Propietario): string {
-    const segundoNombre = propietario.segundo_nombre ? ` ${propietario.segundo_nombre}` : '';
-    return `${propietario.primer_nombre}${segundoNombre} ${propietario.apellidos}`;
   }
 
   onSubmit(): void {
@@ -140,20 +120,5 @@ export class VehicleFormComponent implements OnInit {
 
   onCancel(): void {
     this.dialogRef.close(false);
-  }
-
-  getErrorMessage(fieldName: string): string {
-    const field = this.form.get(fieldName);
-    
-    if (field?.hasError('required')) {
-      return 'Este campo es requerido';
-    }
-    
-    if (field?.hasError('maxlength')) {
-      const maxLength = field.errors?.['maxlength'].requiredLength;
-      return `Máximo ${maxLength} caracteres`;
-    }
-    
-    return '';
   }
 }

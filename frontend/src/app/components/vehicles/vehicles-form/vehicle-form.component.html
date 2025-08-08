@@ -11,29 +11,107 @@
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <label>
-            Nombre:
+            Placa:
             <input 
-              formControlName="name" 
+              formControlName="placa" 
               type="text" 
-              [class.error]="form.get('name')?.invalid && form.get('name')?.touched"
-              placeholder="Ingrese el nombre del vehículo">
+              [class.error]="form.get('placa')?.invalid && form.get('placa')?.touched"
+              placeholder="Ingrese la placa del vehículo"
+              maxlength="7">
           </label>
-          <div *ngIf="form.get('name')?.invalid && form.get('name')?.touched" class="error-message">
-            El nombre es requerido
+          <div *ngIf="form.get('placa')?.invalid && form.get('placa')?.touched" class="error-message">
+            {{ getErrorMessage('placa') }}
           </div>
         </div>
-        
+
         <div class="form-group">
           <label>
-            Año:
+            Color:
             <input 
-              formControlName="year" 
-              type="number" 
-              [class.error]="form.get('year')?.invalid && form.get('year')?.touched"
-              placeholder="Ingrese el año del vehículo">
+              formControlName="color" 
+              type="text" 
+              [class.error]="form.get('color')?.invalid && form.get('color')?.touched"
+              placeholder="Ingrese el color del vehículo">
           </label>
-          <div *ngIf="form.get('year')?.invalid && form.get('year')?.touched" class="error-message">
-            El año es requerido y debe ser válido
+          <div *ngIf="form.get('color')?.invalid && form.get('color')?.touched" class="error-message">
+            {{ getErrorMessage('color') }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>
+            Marca:
+            <input 
+              formControlName="marca" 
+              type="text" 
+              [class.error]="form.get('marca')?.invalid && form.get('marca')?.touched"
+              placeholder="Ingrese la marca del vehículo">
+          </label>
+          <div *ngIf="form.get('marca')?.invalid && form.get('marca')?.touched" class="error-message">
+            {{ getErrorMessage('marca') }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>
+            Tipo de Vehículo:
+            <select 
+              formControlName="tipo_vehiculo" 
+              [class.error]="form.get('tipo_vehiculo')?.invalid && form.get('tipo_vehiculo')?.touched">
+              <option value="" disabled>Seleccione tipo</option>
+              <option *ngFor="let tipo of tiposVehiculo" [value]="tipo.value">{{ tipo.label }}</option>
+            </select>
+          </label>
+          <div *ngIf="form.get('tipo_vehiculo')?.invalid && form.get('tipo_vehiculo')?.touched" class="error-message">
+            {{ getErrorMessage('tipo_vehiculo') }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>
+            Conductor:
+            <select 
+              formControlName="conductor_id" 
+              [class.error]="form.get('conductor_id')?.invalid && form.get('conductor_id')?.touched">
+              <option value="" disabled>Seleccione conductor</option>
+              <option *ngFor="let conductor of conductores" [value]="conductor.id">
+                {{ getConductorNombreCompleto(conductor) }}
+              </option>
+            </select>
+          </label>
+          <div *ngIf="form.get('conductor_id')?.invalid && form.get('conductor_id')?.touched" class="error-message">
+            {{ getErrorMessage('conductor_id') }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>
+            Propietario:
+            <select 
+              formControlName="propietario_id" 
+              [class.error]="form.get('propietario_id')?.invalid && form.get('propietario_id')?.touched">
+              <option value="" disabled>Seleccione propietario</option>
+              <option *ngFor="let propietario of propietarios" [value]="propietario.id">
+                {{ getPropietarioNombreCompleto(propietario) }}
+              </option>
+            </select>
+          </label>
+          <div *ngIf="form.get('propietario_id')?.invalid && form.get('propietario_id')?.touched" class="error-message">
+            {{ getErrorMessage('propietario_id') }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>
+            Estado:
+            <select 
+              formControlName="estado" 
+              [class.error]="form.get('estado')?.invalid && form.get('estado')?.touched">
+              <option *ngFor="let estado of estados" [value]="estado.value">{{ estado.label }}</option>
+            </select>
+          </label>
+          <div *ngIf="form.get('estado')?.invalid && form.get('estado')?.touched" class="error-message">
+            {{ getErrorMessage('estado') }}
           </div>
         </div>
         

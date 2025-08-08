@@ -21,10 +21,10 @@
     </button>
   </div>
 
-  <!-- Stats Cards - Only show when not loading -->
+  <!-- Stats Cards - Full width cards -->
   <div *ngIf="!isLoading" class="row mb-4">
-    <div class="col-md-3 mb-3">
-      <div class="stat-card vehicles" (click)="openVehicleModal()" style="cursor: pointer;">
+    <div class="col-md-3 mb-3 col-full-card">
+      <div class="stat-card vehicles card-stretch" (click)="openVehicleModal()" style="cursor: pointer;">
         <div class="stat-icon">
           <i class="fas fa-truck"></i>
         </div>
@@ -40,8 +40,8 @@
       </div>
     </div>
 
-    <div class="col-md-3 mb-3">
-      <div class="stat-card conductors" (click)="openConductorModal()" style="cursor: pointer;">
+    <div class="col-md-3 mb-3 col-full-card">
+      <div class="stat-card conductors card-stretch" (click)="openConductorModal()" style="cursor: pointer;">
         <div class="stat-icon">
           <i class="fas fa-user-tie"></i>
         </div>
@@ -57,8 +57,8 @@
       </div>
     </div>
 
-    <div class="col-md-3 mb-3">
-      <div class="stat-card propietarios" (click)="openPropietarioModal()" style="cursor: pointer;">
+    <div class="col-md-3 mb-3 col-full-card">
+      <div class="stat-card propietarios card-stretch" (click)="openPropietarioModal()" style="cursor: pointer;">
         <div class="stat-icon">
           <i class="fas fa-user-circle"></i>
         </div>
@@ -74,8 +74,8 @@
       </div>
     </div>
 
-    <div class="col-md-3 mb-3">
-      <div class="stat-card reports">
+    <div class="col-md-3 mb-3 col-full-card">
+      <div class="stat-card reports card-stretch">
         <div class="stat-icon">
           <i class="fas fa-chart-bar"></i>
         </div>

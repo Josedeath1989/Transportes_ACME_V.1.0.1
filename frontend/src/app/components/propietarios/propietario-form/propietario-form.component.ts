@@ -25,8 +25,46 @@ export class PropietarioFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      name: new FormControl('', Validators.required),
-      address: new FormControl('', Validators.required)
+      cedula: new FormControl('', [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(20),
+        Validators.pattern(/^[0-9a-zA-Z\s\-]+$/)
+      ]),
+      primer_nombre: new FormControl('', [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(50),
+        Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)
+      ]),
+      segundo_nombre: new FormControl('', [
+        Validators.maxLength(50),
+        Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)
+      ]),
+      apellidos: new FormControl('', [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(100),
+        Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)
+      ]),
+      telefono: new FormControl('', [
+        Validators.required,
+        Validators.minLength(7),
+        Validators.maxLength(20),
+        Validators.pattern(/^[0-9\s\-\+\(\)]+$/)
+      ]),
+      direccion: new FormControl('', [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(200)
+      ]),
+      ciudad: new FormControl('', [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(100),
+        Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)
+      ]),
+      estado: new FormControl('', [Validators.required])
     });
 
     if (this.data && this.data.propietario) {

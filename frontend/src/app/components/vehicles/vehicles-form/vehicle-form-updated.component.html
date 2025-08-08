@@ -1,0 +1,154 @@
+<div class="vehicle-form-overlay">
+  <div class="vehicle-form-container">
+    <div class="modal-header">
+      <h2>{{ isEditMode ? 'Editar Vehículo' : 'Nuevo Vehículo' }}</h2>
+      <button type="button" class="close-button" aria-label="Cerrar" (click)="onCancel()">
+        &times;
+      </button>
+    </div>
+    
+    <div class="modal-content">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        
+        <!-- Placa -->
+        <div class="form-group">
+          <label for="placa">
+            Placa:
+            <span class="required">*</span>
+          </label>
+          <input 
+            id="placa"
+            formControlName="placa" 
+            type="text" 
+            [class.error]="form.get('placa')?.invalid && form.get('placa')?.touched"
+            placeholder="Ingrese la placa del vehículo"
+            maxlength="10">
+          <div *ngIf="form.get('placa')?.invalid && form.get('placa')?.touched" class="error-message">
+            <span *ngIf="form.get('placa')?.errors?.['required']">La placa es requerida</span>
+            <span *ngIf="form.get('placa')?.errors?.['pattern']">Formato de placa inválido</span>
+            <span *ngIf="form.get('placa')?.errors?.['minlength']">Mínimo 3 caracteres</span>
+            <span *ngIf="form.get('placa')?.errors?.['maxlength']">Máximo 10 caracteres</span>
+          </div>
+        </div>
+
+        <!-- Color -->
+        <div class="form-group">
+          <label for="color">
+            Color:
+            <span class="required">*</span>
+          </label>
+          <input 
+            id="color"
+            formControlName="color" 
+            type="text" 
+            [class.error]="form.get('color')?.invalid && form.get('color')?.touched"
+            placeholder="Ingrese el color del vehículo"
+            maxlength="30">
+          <div *ngIf="form.get('color')?.invalid && form.get('color')?.touched" class="error-message">
+            <span *ngIf="form.get('color')?.errors?.['required']">El color es requerido</span>
+            <span *ngIf="form.get('color')?.errors?.['minlength']">Mínimo 2 caracteres</span>
+            <span *ngIf="form.get('color')?.errors?.['maxlength']">Máximo 30 caracteres</span>
+            <span *ngIf="form.get('color')?.errors?.['pattern']">Solo letras y espacios</span>
+          </div>
+        </div>
+
+        <!-- Marca -->
+        <div class="form-group">
+          <label for="marca">
+            Marca:
+            <span class="required">*</span>
+          </label>
+          <input 
+            id="marca"
+            formControlName="marca" 
+            type="text" 
+            [class.error]="form.get('marca')?.invalid && form.get('marca')?.touched"
+            placeholder="Ingrese la marca del vehículo"
+            maxlength="50">
+          <div *ngIf="form.get('marca')?.invalid && form.get('marca')?.touched" class="error-message">
+            <span *ngIf="form.get('marca')?.errors?.['required']">La marca es requerida</span>
+            <span *ngIf="form.get('marca')?.errors?.['minlength']">Mínimo 2 caracteres</span>
+            <span *ngIf="form.get('marca')?.errors?.['maxlength']">Máximo 50 caracteres</span>
+            <span *ngIf="form.get('marca')?.errors?.['pattern']">Solo letras y espacios</span>
+          </div>
+        </div>
+
+        <!-- Tipo de Vehículo -->
+        <div class="form-group">
+          <label for="tipo_vehiculo">
+            Tipo de Vehículo:
+            <span class="required">*</span>
+          </label>
+          <select 
+            id="tipo_vehiculo"
+            formControlName="tipo_vehiculo" 
+            [class.error]="form.get('tipo_vehiculo')?.invalid && form.get('tipo_vehiculo')?.touched">
+            <option value="">Seleccione el tipo de vehículo</option>
+            <option value="particular">Particular</option>
+            <option value="publico">Público</option>
+          </select>
+          <div *ngIf="form.get('tipo_vehiculo')?.invalid && form.get('tipo_vehiculo')?.touched" class="error-message">
+            <span *ngIf="form.get('tipo_vehiculo')?.errors?.['required']">El tipo de vehículo es requerido</span>
+          </div>
+        </div>
+
+        <!-- Conductor -->
+        <div class="form-group">
+          <label for="conductor_id">
+            Conductor:
+            <span class="required">*</span>
+          </label>
+          <select 
+            id="conductor_id"
+            formControlName="conductor_id" 
+            [class.error]="form.get('conductor_id')?.invalid && form.get('conductor_id')?.touched">
+            <option value="">Seleccione un conductor</option>
+            <option *ngFor="let conductor of conductores" [value]="conductor.id">
+              {{ conductor.nombre }} {{ conductor.apellidos }}
+            </option>
+          </select>
+          <div *ngIf="form.get('conductor_id')?.invalid && form.get('conductor_id')?.touched" class="error-message">
+            <span *ngIf="form.get('conductor_id')?.errors?.['required']">El conductor es requerido</span>
+          </div>
+        </div>
+
+        <!-- Propietario -->
+        <div class="form-group">
+          <label for="propietario_id">
+            Propietario:
+            <span class="required">*</span>
+          </label>
+          <select 
+            id="propietario_id"
+            formControlName="propietario_id" 
+            [class.error]="form.get('propietario_id')?.invalid && form.get('propietario_id')?.touched">
+            <option value="">Seleccione un propietario</option>
+            <option *ngFor="let propietario of propietarios" [value]="propietario.id">
+              {{ propietario.primer_nombre }} {{ propietario.apellidos }}
+            </option>
+          </select>
+          <div *ngIf="form.get('propietario_id')?.invalid && form.get('propietario_id')?.touched" class="error-message">
+            <span *ngIf="form.get('propietario_id')?.errors?.['required']">El propietario es requerido</span>
+          </div>
+        </div>
+
+        <!-- Form Actions - Consistent with propietario form -->
+        <div class="form-actions">
+          <button 
+            type="button" 
+            class="btn-cancel"
+            (click)="onCancel()" 
+            [disabled]="loading">
+            {{ loading ? 'Procesando...' : 'Cancelar' }}
+          </button>
+          <button 
+            type="submit" 
+            class="btn-submit"
+            [disabled]="loading || form.invalid">
+            {{ loading ? 'Guardando...' : (isEditMode ? 'Actualizar' : 'Crear') }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
