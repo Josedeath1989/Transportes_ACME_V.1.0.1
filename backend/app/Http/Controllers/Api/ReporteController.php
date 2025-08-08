@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller as BaseController;
 use App\Models\Vehicle;
 use App\Models\Conductor;
 use App\Models\Propietario;
@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
-class ReporteController extends Controller
+class ReporteController extends BaseController
 {
     /**
      * Get main report.

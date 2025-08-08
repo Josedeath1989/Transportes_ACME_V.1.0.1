@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller as BaseController;
 use App\Models\Conductor;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
-class ConductorController extends Controller
+class ConductorController extends BaseController
 {
     /**
      * Display a listing of conductors.
@@ -228,4 +228,4 @@ class ConductorController extends Controller
             ], 500);
         }
     }
-} 
+}

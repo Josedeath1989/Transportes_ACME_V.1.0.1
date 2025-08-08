@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller as BaseController;
 use App\Models\Vehicle;
 use App\Models\Conductor;
 use App\Models\Propietario;
@@ -11,7 +11,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
-class VehicleController extends Controller
+class VehicleController extends BaseController
 {
     /**
      * Display a listing of vehicles.
