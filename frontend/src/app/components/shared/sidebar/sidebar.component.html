@@ -1,0 +1,75 @@
+<div class="sidebar" [class.active]="isActive">
+  <div class="sidebar-header">
+    <div class="brand">
+      <i class="fas fa-truck-moving" aria-hidden="true"></i>
+      <span>Transportes ACME</span>
+    </div>
+    <button class="sidebar-toggle" (click)="toggleSidebar()" title="Toggle sidebar" aria-label="Toggle sidebar">
+      <i class="fas fa-bars" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <div class="sidebar-content">
+    <div class="user-info">
+      <div class="user-avatar">
+        <i class="fas fa-user-circle" aria-hidden="true"></i>
+      </div>
+      <div class="user-details">
+        <h6>{{ userName }}</h6>
+        <small>{{ userRole }}</small>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/dashboard']" [class.active]="isActiveRoute('/dashboard')" title="Dashboard" aria-label="Go to Dashboard">
+            <i class="fas fa-tachometer-alt" aria-hidden="true"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/vehicles']" [class.active]="isActiveRoute('/vehicles')" title="Vehicles" aria-label="Go to Vehicles">
+            <i class="fas fa-truck" aria-hidden="true"></i>
+            <span>Vehículos</span>
+            <span class="badge badge-pill badge-primary ml-auto" [attr.aria-label]="{{ stats.vehicles + ' vehicles' }}">{{ stats.vehicles }}</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/conductors']" [class.active]="isActiveRoute('/conductors')" title="Conductors" aria-label="Go to Conductors">
+            <i class="fas fa-user-tie" aria-hidden="true"></i>
+            <span>Conductores</span>
+            <span class="badge badge-pill badge-success ml-auto" [attr.aria-label]="{{ stats.conductors + ' conductors' }}">{{ stats.conductors }}</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/propietarios']" [class.active]="isActiveRoute('/propietarios')" title="Propietarios" aria-label="Go to Propietarios">
+            <i class="fas fa-user-circle" aria-hidden="true"></i>
+            <span>Propietarios</span>
+            <span class="badge badge-pill badge-info ml-auto" [attr.aria-label]="{{ stats.propietarios + ' propietarios' }}">{{ stats.propietarios }}</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/reports']" [class.active]="isActiveRoute('/reports')" title="Reports" aria-label="Go to Reports">
+            <i class="fas fa-chart-bar" aria-hidden="true"></i>
+            <span>Reportes</span>
+            <span class="badge badge-pill badge-warning ml-auto" [attr.aria-label]="{{ stats.reports + ' reports' }}">{{ stats.reports }}</span>
+          </a>
+        </li>
+
+        <li class="nav-divider"></li>
+
+        <li class="nav-item">
+          <a class="nav-link" (click)="logout()" title="Logout" aria-label="Logout">
+            <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
+            <span>Cerrar Sesión</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

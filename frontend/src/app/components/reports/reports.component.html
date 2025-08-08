@@ -1,0 +1,11 @@
+<div class="reports">
+  <h1>Informes</h1>
+  <div class="report-list">
+    <div class="report-item" *ngFor="let report of reports">
+      <h2>{{ report.title }}</h2>
+      <p>{{ report.description }}</p>
+      <p>Fecha de creación: {{ report.createdAt | date }}</p>
+      <p>Estado: {{ report.status }}</p>
+    </div>
+  </div>
+</div>

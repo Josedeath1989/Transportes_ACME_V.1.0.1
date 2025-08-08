@@ -1,0 +1,14 @@
+<div class="wrapper">
+  <!-- Sidebar -->
+  <app-sidebar *ngIf="authService.isLoggedIn()"></app-sidebar>
+  
+  <div id="content" [class]="authService.isLoggedIn() ? 'active' : ''">
+    <!-- Navbar -->
+    <app-navbar *ngIf="authService.isLoggedIn()"></app-navbar>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

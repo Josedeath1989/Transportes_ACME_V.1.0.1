@@ -1,0 +1,14 @@
+<div class="vehicle-form">
+  <h1>Formulario de Vehículos</h1>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <label>
+      Nombre:
+      <input formControlName="name" type="text">
+    </label>
+    <label>
+      Año:
+      <input formControlName="year" type="number">
+    </label>
+    <button type="submit">Enviar</button>
+  </form>
+</div>

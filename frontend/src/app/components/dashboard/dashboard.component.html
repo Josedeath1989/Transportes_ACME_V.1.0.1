@@ -1,0 +1,159 @@
+<div class="dashboard-container">
+  <!-- Header Section -->
+  <div class="dashboard-header">
+    <h1><i class="fas fa-tachometer-alt"></i> Panel de Control</h1>
+    <p class="text-muted">Bienvenido al sistema de gestión de transportes</p>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="row mb-4">
+    <div class="col-md-3 mb-3">
+      <div class="stat-card vehicles">
+        <div class="stat-icon">
+          <i class="fas fa-truck"></i>
+        </div>
+        <div class="stat-content">
+          <h3>{{ stats.vehicles }}</h3>
+          <p>Vehículos</p>
+        </div>
+        <div class="stat-footer">
+          <a [routerLink]="['/vehicles']" class="text-decoration-none">
+            <small>Ver todos <i class="fas fa-arrow-right"></i></small>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <div class="stat-card conductors">
+        <div class="stat-icon">
+          <i class="fas fa-user-tie"></i>
+        </div>
+        <div class="stat-content">
+          <h3>{{ stats.conductors }}</h3>
+          <p>Conductores</p>
+        </div>
+        <div class="stat-footer">
+          <a [routerLink]="['/conductors']" class="text-decoration-none">
+            <small>Ver todos <i class="fas fa-arrow-right"></i></small>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <div class="stat-card propietarios">
+        <div class="stat-icon">
+          <i class="fas fa-user-circle"></i>
+        </div>
+        <div class="stat-content">
+          <h3>{{ stats.propietarios }}</h3>
+          <p>Propietarios</p>
+        </div>
+        <div class="stat-footer">
+          <a [routerLink]="['/propietarios']" class="text-decoration-none">
+            <small>Ver todos <i class="fas fa-arrow-right"></i></small>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <div class="stat-card reports">
+        <div class="stat-icon">
+          <i class="fas fa-chart-bar"></i>
+        </div>
+        <div class="stat-content">
+          <h3>{{ stats.reports }}</h3>
+          <p>Reportes</p>
+        </div>
+        <div class="stat-footer">
+          <a [routerLink]="['/reports']" class="text-decoration-none">
+            <small>Ver todos <i class="fas fa-arrow-right"></i></small>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h5><i class="fas fa-bolt"></i> Acciones Rápidas</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <button class="btn btn-primary btn-block" (click)="openVehicleModal()">
+                <i class="fas fa-plus"></i> Nuevo Vehículo
+              </button>
+            </div>
+            <div class="col-md-6 mb-3">
+              <button class="btn btn-success btn-block" (click)="openConductorModal()">
+                <i class="fas fa-plus"></i> Nuevo Conductor
+              </button>
+            </div>
+            <div class="col-md-6 mb-3">
+              <button class="btn btn-info btn-block" (click)="openPropietarioModal()">
+                <i class="fas fa-plus"></i> Nuevo Propietario
+              </button>
+            </div>
+            <div class="col-md-6 mb-3">
+              <button class="btn btn-warning btn-block" [routerLink]="['/reports']">
+                <i class="fas fa-chart-line"></i> Ver Reportes
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          <h5><i class="fas fa-clock"></i> Últimas Actividades</h5>
+        </div>
+        <div class="card-body">
+          <div class="activity-list">
+            <div class="activity-item" *ngFor="let activity of recentActivities">
+              <div class="activity-icon" [ngClass]="'activity-' + activity.type">
+                <i [ngClass]="activity.icon"></i>
+              </div>
+              <div class="activity-content">
+                <p class="mb-0">{{ activity.description }}</p>
+                <small class="text-muted">{{ activity.time }}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Container -->
+<div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ modalTitle }}</h5>
+        <button type="button" class="close" (click)="closeModal()">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ng-container *ngIf="modalType === 'vehicle'">
+          <app-vehicle-form></app-vehicle-form>
+        </ng-container>
+        <ng-container *ngIf="modalType === 'conductor'">
+          <app-conductor-form></app-conductor-form>
+        </ng-container>
+        <ng-container *ngIf="modalType === 'propietario'">
+          <app-propietario-form></app-propietario-form>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<div class="propietario-form">
+  <h1>Formulario de Propietarios</h1>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <label>
+      Nombre:
+      <input formControlName="name" type="text">
+    </label>
+    <label>
+      Dirección:
+      <input formControlName="address" type="text">
+    </label>
+    <button type="submit">Enviar</button>
+  </form>
+</div>

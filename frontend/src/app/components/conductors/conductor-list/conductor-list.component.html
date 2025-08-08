@@ -1,0 +1,8 @@
+<div class="conductor-list">
+  <h1>Lista de Conductores</h1>
+  <ul>
+    <li *ngFor="let conductor of conductores">
+      {{ conductor.primer_nombre }} {{ conductor.segundo_nombre || '' }} {{ conductor.apellidos }} ({{ conductor.cedula }})
+    </li>
+  </ul>
+</div>

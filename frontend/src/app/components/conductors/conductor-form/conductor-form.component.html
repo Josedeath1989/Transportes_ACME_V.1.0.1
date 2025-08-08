@@ -1,0 +1,14 @@
+<div class="conductor-form">
+  <h1>Formulario de Conductores</h1>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <label>
+      Nombre:
+      <input formControlName="name" type="text">
+    </label>
+    <label>
+      Licencia:
+      <input formControlName="license" type="text">
+    </label>
+    <button type="submit">Enviar</button>
+  </form>
+</div>
