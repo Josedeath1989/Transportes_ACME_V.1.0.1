@@ -1,14 +1,49 @@
-<div class="conductor-form">
-  <h1>Formulario de Conductores</h1>
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <label>
-      Nombre:
-      <input formControlName="name" type="text">
-    </label>
-    <label>
-      Licencia:
-      <input formControlName="license" type="text">
-    </label>
-    <button type="submit">Enviar</button>
-  </form>
+<div class="conductor-form-overlay">
+  <div class="conductor-form-container">
+    <div class="modal-header">
+      <h2>Formulario de Conductores</h2>
+      <button type="button" class="close-button" aria-label="Cerrar" (click)="onCancel()">
+        &times;
+      </button>
+    </div>
+    
+    <div class="modal-content">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label>
+            Nombre:
+            <input 
+              formControlName="name" 
+              type="text" 
+              [class.error]="form.get('name')?.invalid && form.get('name')?.touched"
+              placeholder="Ingrese el nombre del conductor">
+          </label>
+          <div *ngIf="form.get('name')?.invalid && form.get('name')?.touched" class="error-message">
+            El nombre es requerido
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>
+            Licencia:
+            <input 
+              formControlName="license" 
+              type="text" 
+              [class.error]="form.get('license')?.invalid && form.get('license')?.touched"
+              placeholder="Ingrese el número de licencia">
+          </label>
+          <div *ngIf="form.get('license')?.invalid && form.get('license')?.touched" class="error-message">
+            La licencia es requerida
+          </div>
+        </div>
+        
+        <div class="form-actions">
+          <button type="submit" [disabled]="loading || form.invalid">
+            {{ loading ? 'Guardando...' : (isEditMode ? 'Actualizar' : 'Crear') }}
+          </button>
+          <button type="button" (click)="onCancel()" [disabled]="loading">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

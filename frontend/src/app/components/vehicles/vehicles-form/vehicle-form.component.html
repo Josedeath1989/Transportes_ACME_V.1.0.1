@@ -1,19 +1,51 @@
-<div class="modal-header">
-  <h2>Formulario de Vehículos</h2>
-  <button type="button" class="close-button" aria-label="Cerrar" (click)="close()">
-    &times;
-  </button>
-</div>
-<div class="modal-content">
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <label>
-      Nombre:
-      <input formControlName="name" type="text">
-    </label>
-    <label>
-      Año:
-      <input formControlName="year" type="number">
-    </label>
-    <button type="submit">Enviar</button>
-  </form>
+<div class="vehicle-form-overlay">
+  <div class="vehicle-form-container">
+    <div class="modal-header">
+      <h2>{{ isEditMode ? 'Editar Vehículo' : 'Nuevo Vehículo' }}</h2>
+      <button type="button" class="close-button" aria-label="Cerrar" (click)="onCancel()">
+        &times;
+      </button>
+    </div>
+    
+    <div class="modal-content">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label>
+            Nombre:
+            <input 
+              formControlName="name" 
+              type="text" 
+              [class.error]="form.get('name')?.invalid && form.get('name')?.touched"
+              placeholder="Ingrese el nombre del vehículo">
+          </label>
+          <div *ngIf="form.get('name')?.invalid && form.get('name')?.touched" class="error-message">
+            El nombre es requerido
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>
+            Año:
+            <input 
+              formControlName="year" 
+              type="number" 
+              [class.error]="form.get('year')?.invalid && form.get('year')?.touched"
+              placeholder="Ingrese el año del vehículo">
+          </label>
+          <div *ngIf="form.get('year')?.invalid && form.get('year')?.touched" class="error-message">
+            El año es requerido y debe ser válido
+          </div>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" (click)="onCancel()" [disabled]="loading">
+            Cancelar
+          </button>
+          <button type="submit" [disabled]="loading || form.invalid">
+            {{ loading ? 'Guardando...' : (isEditMode ? 'Actualizar' : 'Crear') }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
