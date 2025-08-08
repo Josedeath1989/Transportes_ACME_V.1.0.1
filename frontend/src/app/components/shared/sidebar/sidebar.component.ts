@@ -8,6 +8,7 @@ import { Vehicle } from '../../../models/vehicle.model';
 import { Conductor } from '../../../models/conductor.model';
 import { Propietario } from '../../../models/propietario.model';
 import { ApiResponse } from '../../../models/api-response.model';
+import { ModalService } from '../../../services/modal.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -31,7 +32,8 @@ export class SidebarComponent implements OnInit {
     private authService: AuthService,
     private vehicleService: VehicleService,
     private conductorService: ConductorService,
-    private propietarioService: PropietarioService
+    private propietarioService: PropietarioService,
+    private modalService: ModalService
   ) {}
 
   ngOnInit(): void {
@@ -108,5 +110,17 @@ export class SidebarComponent implements OnInit {
         this.router.navigate(['/login']);
       }
     });
+  }
+
+  openConductorModal(): void {
+    this.modalService.openConductorModal();
+  }
+
+  openPropietarioModal(): void {
+    this.modalService.openPropietarioModal();
+  }
+
+  openVehicleModal(): void {
+    this.modalService.openVehicleModal();
   }
 }

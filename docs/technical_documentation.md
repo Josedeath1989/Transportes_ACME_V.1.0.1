@@ -78,7 +78,7 @@ Implementé seguridad en cada capa:
 ### Backend
 ```bash
 # Clonar el proyecto
-git clone [tu-repositorio]
+git clone https://github.com/Josedeath1989/Transportes_ACME_V.1.0.1.git
 
 # Instalar dependencias
 composer install
