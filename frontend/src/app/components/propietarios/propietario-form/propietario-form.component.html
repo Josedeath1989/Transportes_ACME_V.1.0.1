@@ -22,6 +22,107 @@
             El nombre es requerido
           </div>
         </div>
+
+        <div class="form-group">
+          <label>
+            Cédula:
+            <input 
+              formControlName="cedula" 
+              type="text" 
+              [class.error]="form.get('cedula')?.invalid && form.get('cedula')?.touched"
+              placeholder="Ingrese la cédula del propietario">
+          </label>
+          <div *ngIf="form.get('cedula')?.invalid && form.get('cedula')?.touched" class="error-message">
+            La cédula es requerida
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>
+            Primer nombre:
+            <input 
+              formControlName="primer_nombre" 
+              type="text" 
+              [class.error]="form.get('primer_nombre')?.invalid && form.get('primer_nombre')?.touched"
+              placeholder="Ingrese el primer nombre del propietario">
+          </label>
+          <div *ngIf="form.get('primer_nombre')?.invalid && form.get('primer_nombre')?.touched" class="error-message">
+            El primer nombre es requerido
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>
+            Segundo nombre:
+            <input 
+              formControlName="segundo_nombre" 
+              type="text" 
+              [class.error]="form.get('segundo_nombre')?.invalid && form.get('segundo_nombre')?.touched"
+              placeholder="Ingrese el segundo nombre del propietario">
+          </label>
+          <div *ngIf="form.get('segundo_nombre')?.invalid && form.get('segundo_nombre')?.touched" class="error-message">
+            El segundo nombre es requerido
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>
+            Apellidos:
+            <input 
+              formControlName="apellidos" 
+              type="text" 
+              [class.error]="form.get('apellidos')?.invalid && form.get('apellidos')?.touched"
+              placeholder="Ingrese los apellidos del propietario">
+          </label>
+          <div *ngIf="form.get('apellidos')?.invalid && form.get('apellidos')?.touched" class="error-message">
+            Los apellidos son requeridos
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>
+            Teléfono:
+            <input 
+              formControlName="telefono" 
+              type="text" 
+              [class.error]="form.get('telefono')?.invalid && form.get('telefono')?.touched"
+              placeholder="Ingrese el teléfono del propietario">
+          </label>
+          <div *ngIf="form.get('telefono')?.invalid && form.get('telefono')?.touched" class="error-message">
+            El teléfono es requerido
+          </div>
+        </div>
+
+        <div class="form-group">
+  <label>
+    Ciudad:
+    <input 
+      formControlName="ciudad" 
+      type="text" 
+      [class.error]="form.get('ciudad')?.invalid && form.get('ciudad')?.touched"
+      placeholder="Ingrese la ciudad del propietario">
+  </label>
+  <div *ngIf="form.get('ciudad')?.invalid && form.get('ciudad')?.touched" class="error-message">
+    La ciudad es requerida
+  </div>
+</div>
+
+<div class="form-group">
+  <label>
+    Estado:
+    <select 
+      formControlName="estado" 
+      [class.error]="form.get('estado')?.invalid && form.get('estado')?.touched"
+      placeholder="Seleccione el estado del propietario">
+      <option value="">Seleccione un estado</option>
+      <!-- Agregar opciones de estado aquí -->
+    </select>
+  </label>
+  <div *ngIf="form.get('estado')?.invalid && form.get('estado')?.touched" class="error-message">
+    El estado es requerido
+  </div>
+</div>
+        
         
         <div class="form-group">
           <label>
@@ -41,7 +142,9 @@
           <button type="submit" [disabled]="loading || form.invalid">
             {{ loading ? 'Guardando...' : (isEditMode ? 'Actualizar' : 'Crear') }}
           </button>
-          <button type="button" (click)="onCancel()" [disabled]="loading">Cancelar</button>
+          <button type="button" [disabled]="loading || form.invalid">
+            {{ loading ? 'Guardando...' : (isEditMode ? 'Actualizar' : 'Crear') }}
+          </button>
         </div>
       </form>
     </div>

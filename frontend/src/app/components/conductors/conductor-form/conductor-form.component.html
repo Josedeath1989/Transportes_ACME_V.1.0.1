@@ -1,7 +1,7 @@
 <div class="conductor-form-overlay">
   <div class="conductor-form-container">
     <div class="modal-header">
-      <h2>Formulario de Conductores</h2>
+      <h2>{{ isEditMode ? 'Editar Conductor' : 'Nuevo Conductor' }}</h2>
       <button type="button" class="close-button" aria-label="Cerrar" (click)="onCancel()">
         &times;
       </button>
@@ -38,10 +38,12 @@
         </div>
         
         <div class="form-actions">
+          <button type="button" (click)="onCancel()" [disabled]="loading">
+            Cancelar
+          </button>
           <button type="submit" [disabled]="loading || form.invalid">
             {{ loading ? 'Guardando...' : (isEditMode ? 'Actualizar' : 'Crear') }}
           </button>
-          <button type="button" (click)="onCancel()" [disabled]="loading">Cancelar</button>
         </div>
       </form>
     </div>

@@ -96,11 +96,6 @@ form {
   gap: 20px;
 }
 
-.form-group {
-  display: flex;
-  flex-direction: column;
-}
-
 label {
   display: flex;
   flex-direction: column;
@@ -109,7 +104,8 @@ label {
   font-size: 0.95rem;
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="number"] {
   padding: 12px 16px;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -118,13 +114,15 @@ input[type="text"] {
   margin-top: 4px;
 }
 
-input[type="text"]:focus {
+input[type="text"]:focus,
+input[type="number"]:focus {
   outline: none;
   border-color: #3498db;
   box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
 }
 
-input[type="text"].error {
+input[type="text"].error,
+input[type="number"].error {
   border-color: #ff4757;
   box-shadow: 0 0 0 3px rgba(255, 71, 87, 0.1);
 }
@@ -135,68 +133,89 @@ input[type="text"].error {
   margin-top: 4px;
 }
 
+/* Estilos mejorados para los botones de acción */
 .form-actions {
   display: flex;
-  gap: 12px;
-  margin-top: 8px;
+  gap: 16px;
+  margin-top: 32px;
+  justify-content: flex-end;
 }
 
 button[type="submit"] {
-  background: #3498db;
+  background: linear-gradient(135deg, #3498db, #2980b9);
   color: white;
-  padding: 14px 28px;
+  padding: 12px 28px;
   border: none;
   border-radius: 8px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  flex: 1;
+  min-width: 120px;
+  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.2);
 }
 
 button[type="submit"]:hover:not(:disabled) {
-  background: #2980b9;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+  background: linear-gradient(135deg, #2980b9, #21618c);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(52, 152, 219, 0.3);
 }
 
 button[type="submit"]:active:not(:disabled) {
   transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.2);
 }
 
 button[type="submit"]:disabled {
   background: #bdc3c7;
   cursor: not-allowed;
-  opacity: 0.7;
+  transform: none;
+  box-shadow: none;
 }
 
-button[type="button"] {
-  background: #95a5a6;
-  color: white;
-  padding: 14px 28px;
-  border: none;
+/* Botón Cancelar estilizado */
+.form-actions button[type="button"] {
+  background: transparent;
+  color: #7f8c8d;
+  padding: 12px 24px;
+  border: 2px solid #bdc3c7;
   border-radius: 8px;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
-  flex: 1;
+  min-width: 120px;
 }
 
-button[type="button"]:hover:not(:disabled) {
-  background: #7f8c8d;
+.form-actions button[type="button"]:hover:not(:disabled) {
+  background: #f8f9fa;
+  color: #5a6c7d;
+  border-color: #95a5a6;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(149, 165, 166, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-button[type="button"]:active:not(:disabled) {
+.form-actions button[type="button"]:active:not(:disabled) {
   transform: translateY(0);
+  background: #e9ecef;
 }
 
-button[type="button"]:disabled {
-  background: #bdc3c7;
+.form-actions button[type="button"]:disabled {
+  opacity: 0.6;
   cursor: not-allowed;
-  opacity: 0.7;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Estados de focus para accesibilidad */
+button:focus-visible {
+  outline: 2px solid #3498db;
+  outline-offset: 2px;
+}
+
+.form-actions button[type="button"]:focus-visible {
+  outline: 2px solid #7f8c8d;
+  outline-offset: 2px;
 }
 
 /* Responsive design */
