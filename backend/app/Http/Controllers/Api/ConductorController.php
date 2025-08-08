@@ -9,17 +9,22 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Autor: Jose Luis Sierra Ramirez
+ * Fecha: 2025
+ * Descripción: Controlador para gestionar operaciones CRUD de conductores
+ */
 class ConductorController extends BaseController
 {
     /**
-     * Display a listing of conductors.
+     * Muestra un listado de conductores.
      */
     public function index(Request $request): JsonResponse
     {
         try {
             $query = Conductor::activo();
 
-            // Search functionality
+            // Funcionalidad de búsqueda
             if ($request->has('search') && $request->search) {
                 $search = $request->search;
                 $query->where(function ($q) use ($search) {
@@ -29,7 +34,7 @@ class ConductorController extends BaseController
                 });
             }
 
-            // Pagination
+            // Paginación
             $perPage = $request->get('per_page', 10);
             $conductores = $query->orderBy('fecha_registro', 'desc')
                                 ->paginate($perPage);
@@ -55,7 +60,7 @@ class ConductorController extends BaseController
     }
 
     /**
-     * Store a newly created conductor.
+     * Almacena un nuevo conductor.
      */
     public function store(Request $request): JsonResponse
     {

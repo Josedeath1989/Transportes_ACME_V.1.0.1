@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
-import { environment } from '../../environments/environment';
+import { ConfigService } from './config.service';
 
 export interface ApiResponse<T> {
   success: boolean;
@@ -20,9 +20,11 @@ export interface ApiResponse<T> {
   providedIn: 'root'
 })
 export class ApiService {
-  private apiUrl = environment.apiUrl;
-
-  constructor(private http: HttpClient) { }
+  
+  constructor(
+    private http: HttpClient,
+    private configService: ConfigService
+  ) { }
 
   /**
    * GET request
@@ -38,7 +40,10 @@ export class ApiService {
       });
     }
 
-    return this.http.get<ApiResponse<T>>(`${this.apiUrl}${endpoint}`, { params: httpParams })
+    return this.http.get<ApiResponse<T>>(this.configService.getApiUrl(endpoint), { 
+      params: httpParams,
+      withCredentials: true
+    })
       .pipe(
         retry(1),
         catchError(this.handleError)
@@ -49,7 +54,9 @@ export class ApiService {
    * POST request
    */
   post<T>(endpoint: string, data: any): Observable<ApiResponse<T>> {
-    return this.http.post<ApiResponse<T>>(`${this.apiUrl}${endpoint}`, data)
+    return this.http.post<ApiResponse<T>>(this.configService.getApiUrl(endpoint), data, {
+      withCredentials: true
+    })
       .pipe(
         catchError(this.handleError)
       );
@@ -59,7 +66,9 @@ export class ApiService {
    * PUT request
    */
   put<T>(endpoint: string, data: any): Observable<ApiResponse<T>> {
-    return this.http.put<ApiResponse<T>>(`${this.apiUrl}${endpoint}`, data)
+    return this.http.put<ApiResponse<T>>(this.configService.getApiUrl(endpoint), data, {
+      withCredentials: true
+    })
       .pipe(
         catchError(this.handleError)
       );
@@ -69,7 +78,21 @@ export class ApiService {
    * DELETE request
    */
   delete<T>(endpoint: string): Observable<ApiResponse<T>> {
-    return this.http.delete<ApiResponse<T>>(`${this.apiUrl}${endpoint}`)
+    return this.http.delete<ApiResponse<T>>(this.configService.getApiUrl(endpoint), {
+      withCredentials: true
+    })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  /**
+   * PATCH request
+   */
+  patch<T>(endpoint: string, data: any): Observable<ApiResponse<T>> {
+    return this.http.patch<ApiResponse<T>>(this.configService.getApiUrl(endpoint), data, {
+      withCredentials: true
+    })
       .pipe(
         catchError(this.handleError)
       );
@@ -87,6 +110,11 @@ export class ApiService {
     } else {
       // Server-side error
       errorMessage = error.error?.message || error.statusText || 'Server error';
+      
+      // Manejo específico de errores CORS
+      if (error.status === 0) {
+        errorMessage = 'Error de conexión. Verifica que el servidor esté disponible.';
+      }
     }
     
     console.error('API Error:', error);
@@ -98,10 +126,16 @@ export class ApiService {
    */
   private getAuthHeaders(): HttpHeaders {
     const token = localStorage.getItem('auth_token');
-    return new HttpHeaders({
+    let headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
+      'Accept': 'application/json'
     });
+    
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+    
+    return headers;
   }
 
   /**
@@ -118,9 +152,10 @@ export class ApiService {
       });
     }
 
-    return this.http.get<ApiResponse<T>>(`${this.apiUrl}${endpoint}`, { 
+    return this.http.get<ApiResponse<T>>(this.configService.getApiUrl(endpoint), { 
       params: httpParams,
-      headers: this.getAuthHeaders()
+      headers: this.getAuthHeaders(),
+      withCredentials: true
     })
       .pipe(
         retry(1),
@@ -132,8 +167,9 @@ export class ApiService {
    * Authenticated POST request
    */
   postAuth<T>(endpoint: string, data: any): Observable<ApiResponse<T>> {
-    return this.http.post<ApiResponse<T>>(`${this.apiUrl}${endpoint}`, data, {
-      headers: this.getAuthHeaders()
+    return this.http.post<ApiResponse<T>>(this.configService.getApiUrl(endpoint), data, {
+      headers: this.getAuthHeaders(),
+      withCredentials: true
     })
       .pipe(
         catchError(this.handleError)
@@ -144,8 +180,9 @@ export class ApiService {
    * Authenticated PUT request
    */
   putAuth<T>(endpoint: string, data: any): Observable<ApiResponse<T>> {
-    return this.http.put<ApiResponse<T>>(`${this.apiUrl}${endpoint}`, data, {
-      headers: this.getAuthHeaders()
+    return this.http.put<ApiResponse<T>>(this.configService.getApiUrl(endpoint), data, {
+      headers: this.getAuthHeaders(),
+      withCredentials: true
     })
       .pipe(
         catchError(this.handleError)
@@ -156,11 +193,12 @@ export class ApiService {
    * Authenticated DELETE request
    */
   deleteAuth<T>(endpoint: string): Observable<ApiResponse<T>> {
-    return this.http.delete<ApiResponse<T>>(`${this.apiUrl}${endpoint}`, {
-      headers: this.getAuthHeaders()
+    return this.http.delete<ApiResponse<T>>(this.configService.getApiUrl(endpoint), {
+      headers: this.getAuthHeaders(),
+      withCredentials: true
     })
       .pipe(
         catchError(this.handleError)
       );
   }
-} 
+}
