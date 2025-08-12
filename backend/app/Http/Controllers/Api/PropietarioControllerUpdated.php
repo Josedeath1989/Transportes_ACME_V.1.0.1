@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\StorePropietarioRequest;
-use App\Http\Requests\UpdatePropietarioRequest;
 use Illuminate\Routing\Controller as BaseController;
 use App\Models\Propietario;
+use App\Http\Requests\StorePropietarioRequest;
+use App\Http\Requests\UpdatePropietarioRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Validator;
 
 class PropietarioController extends BaseController
 {
@@ -115,30 +114,12 @@ class PropietarioController extends BaseController
     /**
      * Update the specified propietario.
      */
-    public function update(Request $request, Propietario $propietario): JsonResponse
+    public function update(UpdatePropietarioRequest $request, Propietario $propietario): JsonResponse
     {
         try {
-            $validator = Validator::make($request->all(), [
-                'cedula' => 'required|string|max:20|unique:propietarios,cedula,' . $propietario->id,
-                'primer_nombre' => 'required|string|max:50',
-                'segundo_nombre' => 'nullable|string|max:50',
-                'apellidos' => 'required|string|max:100',
-                'direccion' => 'required|string|max:200',
-                'telefono' => 'required|string|max:20',
-                'ciudad' => 'required|string|max:100',
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Error de validación',
-                    'errors' => $validator->errors()
-                ], 422);
-            }
-
             DB::beginTransaction();
 
-            $propietario->update($request->all());
+            $propietario->update($request->validated());
 
             DB::commit();
 
@@ -150,9 +131,11 @@ class PropietarioController extends BaseController
 
         } catch (\Exception $e) {
             DB::rollBack();
+            Log::error('Error al actualizar propietario: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Error al actualizar propietario: ' . $e->getMessage()
+                'message' => 'Error al actualizar propietario',
+                'error' => config('app.debug') ? $e->getMessage() : 'Error interno del servidor'
             ], 500);
         }
     }
@@ -184,9 +167,11 @@ class PropietarioController extends BaseController
 
         } catch (\Exception $e) {
             DB::rollBack();
+            Log::error('Error al eliminar propietario: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Error al eliminar propietario: ' . $e->getMessage()
+                'message' => 'Error al eliminar propietario',
+                'error' => config('app.debug') ? $e->getMessage() : 'Error interno del servidor'
             ], 500);
         }
     }
@@ -211,10 +196,12 @@ class PropietarioController extends BaseController
             ]);
 
         } catch (\Exception $e) {
+            Log::error('Error al obtener estadísticas: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Error al obtener estadísticas: ' . $e->getMessage()
+                'message' => 'Error al obtener estadísticas',
+                'error' => config('app.debug') ? $e->getMessage() : 'Error interno del servidor'
             ], 500);
         }
     }
-} 
+}

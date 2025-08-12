@@ -25,8 +25,40 @@ export class ConductorFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      name: new FormControl('', Validators.required),
-      license: new FormControl('', Validators.required)
+      cedula: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^[0-9]{7,10}$/),
+        Validators.maxLength(10)
+      ]),
+      primer_nombre: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(50),
+        Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)
+      ]),
+      segundo_nombre: new FormControl('', [
+        Validators.maxLength(50),
+        Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)
+      ]),
+      apellidos: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(100),
+        Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)
+      ]),
+      direccion: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(200)
+      ]),
+      telefono: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^[0-9]{7,15}$/),
+        Validators.maxLength(15)
+      ]),
+      ciudad: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(50),
+        Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)
+      ]),
+      estado: new FormControl('activo', Validators.required)
     });
 
     if (this.data && this.data.conductor) {

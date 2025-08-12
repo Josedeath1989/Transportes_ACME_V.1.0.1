@@ -1,18 +1,65 @@
-<<<<<<< REPLACE
 <div class="vehicle-list">
-  <h1>Lista de Vehículos</h1>
-  <ul>
-    <li *ngFor="let vehicle of vehicles">
-      {{ vehicle.placa }} - {{ vehicle.marca }} {{ vehicle.modelo }}
-    </li>
-  </ul>
-</div>
-=======
-<div class="vehicle-list">
-  <h1>Lista de Vehículos</h1>
-  <ul>
-    <li *ngFor="let vehicle of vehicles">
-      {{ vehicle.placa }} - {{ vehicle.marca }} {{ vehicle.modelo }}
-    </li>
-  </ul>
+  <div class="header-section">
+    <h1>Lista de Vehículos</h1>
+    <button mat-raised-button color="primary" (click)="openCreateModal()" class="add-button">
+      <mat-icon>add</mat-icon>
+      Agregar Vehículo
+    </button>
+  </div>
+
+  <div class="table-container">
+    <table mat-table [dataSource]="vehicles" class="mat-elevation-z8">
+      
+      <!-- Placa Column -->
+      <ng-container matColumnDef="placa">
+        <th mat-header-cell *matHeaderCellDef> Placa </th>
+        <td mat-cell *matCellDef="let vehicle"> {{ vehicle.placa }} </td>
+      </ng-container>
+
+      <!-- Marca Column -->
+      <ng-container matColumnDef="marca">
+        <th mat-header-cell *matHeaderCellDef> Marca </th>
+        <td mat-cell *matCellDef="let vehicle"> {{ vehicle.marca }} </td>
+      </ng-container>
+
+      <!-- Modelo Column -->
+      <ng-container matColumnDef="modelo">
+        <th mat-header-cell *matHeaderCellDef> Modelo </th>
+        <td mat-cell *matCellDef="let vehicle"> {{ vehicle.modelo }} </td>
+      </ng-container>
+
+      <!-- Año Column -->
+      <ng-container matColumnDef="anio">
+        <th mat-header-cell *matHeaderCellDef> Año </th>
+        <td mat-cell *matCellDef="let vehicle"> {{ vehicle.anio }} </td>
+      </ng-container>
+
+      <!-- Color Column -->
+      <ng-container matColumnDef="color">
+        <th mat-header-cell *matHeaderCellDef> Color </th>
+        <td mat-cell *matCellDef="let vehicle"> {{ vehicle.color }} </td>
+      </ng-container>
+
+      <!-- Acciones Column -->
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+        <td mat-cell *matCellDef="let vehicle">
+          <button mat-icon-button color="primary" (click)="openEditModal(vehicle)" 
+                  matTooltip="Editar vehículo">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="['placa', 'marca', 'modelo', 'anio', 'color', 'acciones']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['placa', 'marca', 'modelo', 'anio', 'color', 'acciones'];"></tr>
+    </table>
+  </div>
+
+  <div *ngIf="vehicles.length === 0" class="no-data">
+    <p>No hay vehículos registrados</p>
+    <button mat-raised-button color="primary" (click)="openCreateModal()">
+      Agregar primer vehículo
+    </button>
+  </div>
 </div>
