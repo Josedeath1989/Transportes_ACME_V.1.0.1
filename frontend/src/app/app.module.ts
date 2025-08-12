@@ -21,6 +21,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatMenuModule } from '@angular/material/menu';
 
 // Third party modules
 import { ToastrModule } from 'ngx-toastr';
@@ -40,6 +41,7 @@ import { LoginComponent } from './components/auth/login/login.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { SidebarComponent } from './components/shared/sidebar/sidebar.component';
 import { ModalComponent } from './components/shared/modal/modal.component';
+import { PropietarioActionsModalComponent } from './components/propietarios/propietario-actions-modal/propietario-actions-modal.component';
 
 // Services
 import { AuthService } from './auth.service';
@@ -95,7 +97,8 @@ const routes: Routes = [
     LoginComponent,
     NavbarComponent,
     SidebarComponent,
-    ModalComponent
+    ModalComponent,
+    PropietarioActionsModalComponent
   ],
   imports: [
     BrowserModule,
@@ -121,6 +124,7 @@ const routes: Routes = [
     MatListModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
+    MatMenuModule,
     
     // Third party modules
     ToastrModule.forRoot({

@@ -1,0 +1,320 @@
+/* Unified List Styles - Modern Card-Based Design */
+
+// Color Variables
+$primary-color: #1976d2;
+$secondary-color: #424242;
+$accent-color: #ff4081;
+$success-color: #4caf50;
+$warning-color: #ff9800;
+$error-color: #f44336;
+$background-color: #f5f5f5;
+$surface-color: #ffffff;
+$text-primary: #212121;
+$text-secondary: #757575;
+$border-radius: 8px;
+$shadow-light: 0 2px 4px rgba(0,0,0,0.1);
+$shadow-medium: 0 4px 8px rgba(0,0,0,0.15);
+$shadow-heavy: 0 8px 16px rgba(0,0,0,0.2);
+
+// Mixins
+@mixin card-base {
+  background: $surface-color;
+  border-radius: $border-radius;
+  box-shadow: $shadow-light;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  
+  &:hover {
+    box-shadow: $shadow-medium;
+    transform: translateY(-2px);
+  }
+}
+
+@mixin button-base {
+  border: none;
+  border-radius: 50px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: $shadow-light;
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Unified List Container
+.unified-list-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  background: $background-color;
+  min-height: 100vh;
+
+  .header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: $surface-color;
+    border-radius: $border-radius;
+    box-shadow: $shadow-light;
+
+    h1 {
+      margin: 0;
+      color: $text-primary;
+      font-size: 2rem;
+      font-weight: 600;
+    }
+
+    .add-button {
+      @include button-base;
+      background: $primary-color;
+      color: white;
+      padding: 12px 24px;
+      
+      &:hover {
+        background: darken($primary-color, 10%);
+      }
+    }
+  }
+
+  // Card Grid Layout
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  // Individual Card
+  .data-card {
+    @include card-base;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 1px solid #e0e0e0;
+
+    .card-header {
+      padding: 1.5rem;
+      background: linear-gradient(135deg, $primary-color, darken($primary-color, 10%));
+      color: white;
+      
+      h3 {
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 600;
+      }
+
+      .card-subtitle {
+        opacity: 0.9;
+        font-size: 0.9rem;
+        margin-top: 0.25rem;
+      }
+    }
+
+    .card-body {
+      padding: 1.5rem;
+      flex: 1;
+
+      .data-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #f0f0f0;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        .label {
+          font-weight: 600;
+          color: $text-secondary;
+          font-size: 0.9rem;
+        }
+
+        .value {
+          color: $text-primary;
+          font-weight: 500;
+        }
+      }
+    }
+
+    .card-footer {
+      padding: 1.5rem;
+      background: #fafafa;
+      border-top: 1px solid #e0e0e0;
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-end;
+    }
+  }
+
+  // Action Buttons
+  .action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+
+    .btn-action {
+      @include button-base;
+      min-width: 40px;
+      height: 40px;
+      justify-content: center;
+      
+      &.btn-edit {
+        background: $primary-color;
+        color: white;
+        
+        &:hover {
+          background: darken($primary-color, 10%);
+        }
+      }
+
+      &.btn-delete {
+        background: $error-color;
+        color: white;
+        
+        &:hover {
+          background: darken($error-color, 10%);
+        }
+      }
+
+      &.btn-view {
+        background: $success-color;
+        color: white;
+        
+        &:hover {
+          background: darken($success-color, 10%);
+        }
+      }
+
+      &.btn-secondary {
+        background: $secondary-color;
+        color: white;
+        
+        &:hover {
+          background: darken($secondary-color, 10%);
+        }
+      }
+    }
+
+    .btn-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+  }
+
+  // Loading and Empty States
+  .loading-container,
+  .error-container,
+  .no-data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    text-align: center;
+
+    mat-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: $text-secondary;
+      margin-bottom: 1.5rem;
+    }
+
+    button {
+      @include button-base;
+      background: $primary-color;
+      color: white;
+    }
+  }
+
+  // Responsive utilities
+  @media (max-width: 768px) {
+    padding: 1rem;
+
+    .header-section {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1rem;
+
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
+
+    .cards-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .data-card {
+      .card-footer {
+        flex-direction: column;
+        align-items: stretch;
+
+        .action-buttons {
+          justify-content: center;
+        }
+      }
+    }
+  }
+}
+
+// Animation classes
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-up {
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

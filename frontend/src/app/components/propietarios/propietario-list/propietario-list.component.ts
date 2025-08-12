@@ -14,6 +14,19 @@ export class PropietarioListComponent implements OnInit, OnDestroy {
   propietarios: Propietario[] = [];
   loading = true;
   error: string | null = null;
+  displayedColumns: string[] = [
+    'id',
+    'cedula',
+    'primer_nombre',
+    'segundo_nombre',
+    'apellidos',
+    'direccion',
+    'telefono',
+    'ciudad',
+    'estado',
+    'fecha_registro',
+    'actions'
+  ];
   
   private destroy$ = new Subject<void>();
 
@@ -56,6 +69,30 @@ export class PropietarioListComponent implements OnInit, OnDestroy {
 
   openEditModal(propietario: Propietario): void {
     this.modalService.openPropietarioModal(propietario);
+  }
+
+  viewPropietario(propietario: Propietario): void {
+    console.log('View propietario:', propietario);
+    // Implementation depends on routing or modal service
+  }
+
+  openActionsModal(propietario: Propietario): void {
+    const dialogRef = this.modalService.openCustomModal<any>(
+      // Lazy load the new modal component
+      import('../propietario-actions-modal/propietario-actions-modal.component').then(m => m.PropietarioActionsModalComponent),
+      { propietario },
+      '400px'
+    );
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'edit') {
+        this.openEditModal(propietario);
+      } else if (result === 'view') {
+        this.viewPropietario(propietario);
+      } else if (result === 'delete') {
+        this.deletePropietario(propietario.id);
+      }
+    });
   }
 
   deletePropietario(id: number): void {

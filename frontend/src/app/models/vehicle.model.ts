@@ -6,6 +6,8 @@ export interface Vehicle {
   placa: string;
   color: string;
   marca: string;
+  modelo: string;
+  anio: number;
   tipo_vehiculo: 'particular' | 'publico';
   conductor_id: number;
   propietario_id: number;

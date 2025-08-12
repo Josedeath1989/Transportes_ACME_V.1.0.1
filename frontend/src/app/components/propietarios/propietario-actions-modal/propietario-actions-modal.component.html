@@ -1,0 +1,15 @@
+<h2>Acciones para {{ propietario.primer_nombre }} {{ propietario.apellidos }}</h2>
+<div class="actions-container">
+  <button mat-raised-button color="primary" (click)="onEdit()">
+    <mat-icon>edit</mat-icon> Editar
+  </button>
+  <button mat-raised-button color="accent" (click)="onView()">
+    <mat-icon>visibility</mat-icon> Ver detalles
+  </button>
+  <button mat-raised-button color="warn" (click)="onDelete()">
+    <mat-icon>delete</mat-icon> Eliminar
+  </button>
+</div>
+<div class="close-container">
+  <button mat-button (click)="onClose()">Cerrar</button>
+</div>

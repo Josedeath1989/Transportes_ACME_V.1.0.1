@@ -12,8 +12,19 @@ import { ModalService } from '../../../services/modal.service';
 })
 export class VehicleListComponent implements OnInit, OnDestroy {
   vehicles: Vehicle[] = [];
+  selectedVehicle: Vehicle | null = null;
   loading = true;
   error: string | null = null;
+  displayedColumns: string[] = [
+    'id',
+    'placa',
+    'color',
+    'marca',
+    'tipo_vehiculo',
+    'estado',
+    'fecha_registro',
+    'actions'
+  ];
   
   private destroy$ = new Subject<void>();
 
@@ -50,12 +61,24 @@ export class VehicleListComponent implements OnInit, OnDestroy {
       });
   }
 
+  openActionsModal(vehicle: Vehicle): void {
+    this.selectedVehicle = vehicle;
+  }
+
+  closeActionsModal(): void {
+    this.selectedVehicle = null;
+  }
+
   openCreateModal(): void {
     this.modalService.openVehicleModal();
   }
 
   openEditModal(vehicle: Vehicle): void {
     this.modalService.openVehicleModal(vehicle);
+  }
+
+  viewVehicle(vehicle: Vehicle): void {
+    console.log('Viewing vehicle:', vehicle);
   }
 
   deleteVehicle(id: number): void {
@@ -78,6 +101,10 @@ export class VehicleListComponent implements OnInit, OnDestroy {
 
   onVehicleSaved(): void {
     this.loadVehicles();
+    this.modalService.closeAllModals();
+  }
+
+  closeModal(): void {
     this.modalService.closeAllModals();
   }
 

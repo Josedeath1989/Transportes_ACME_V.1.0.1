@@ -1,69 +1,10 @@
-<div class="propietario-list">
+<div class="table-container">
   <div class="header-section">
     <h1>Lista de Propietarios</h1>
     <button mat-raised-button color="primary" (click)="openCreateModal()" class="add-button">
       <mat-icon>add</mat-icon>
       Agregar Propietario
     </button>
-  </div>
-
-  <div class="table-container">
-    <table mat-table [dataSource]="propietarios" class="mat-elevation-z8">
-      
-      <!-- ID Column -->
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef> ID </th>
-        <td mat-cell *matCellDef="let propietario"> {{ propietario.id }} </td>
-      </ng-container>
-
-      <!-- Nombre Column -->
-      <ng-container matColumnDef="nombre">
-        <th mat-header-cell *matHeaderCellDef> Nombre </th>
-        <td mat-cell *matCellDef="let propietario"> {{ propietario.nombre }} </td>
-      </ng-container>
-
-      <!-- Apellido Column -->
-      <ng-container matColumnDef="apellido">
-        <th mat-header-cell *matHeaderCellDef> Apellido </th>
-        <td mat-cell *matCellDef="let propietario"> {{ propietario.apellido }} </td>
-      </ng-container>
-
-      <!-- Email Column -->
-      <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef> Email </th>
-        <td mat-cell *matCellDef="let propietario"> {{ propietario.email }} </td>
-      </ng-container>
-
-      <!-- Teléfono Column -->
-      <ng-container matColumnDef="telefono">
-        <th mat-header-cell *matHeaderCellDef> Teléfono </th>
-        <td mat-cell *matCellDef="let propietario"> {{ propietario.telefono }} </td>
-      </ng-container>
-
-      <!-- Dirección Column -->
-      <ng-container matColumnDef="direccion">
-        <th mat-header-cell *matHeaderCellDef> Dirección </th>
-        <td mat-cell *matCellDef="let propietario"> {{ propietario.direccion }} </td>
-      </ng-container>
-
-      <!-- Acciones Column -->
-      <ng-container matColumnDef="acciones">
-        <th mat-header-cell *matHeaderCellDef> Acciones </th>
-        <td mat-cell *matCellDef="let propietario">
-          <button mat-icon-button color="primary" (click)="openEditModal(propietario)" 
-                  matTooltip="Editar propietario">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button color="warn" (click)="deletePropietario(propietario.id)" 
-                  matTooltip="Eliminar propietario">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="['id', 'nombre', 'apellido', 'email', 'telefono', 'direccion', 'acciones']"></tr>
-      <tr mat-row *matRowDef="let row; columns: ['id', 'nombre', 'apellido', 'email', 'telefono', 'direccion', 'acciones'];"></tr>
-    </table>
   </div>
 
   <!-- Loading State -->
@@ -81,12 +22,109 @@
     </button>
   </div>
 
-  <!-- Empty State -->
-  <div *ngIf="propietarios.length === 0 && !loading && !error" class="no-data">
-    <mat-icon>person_off</mat-icon>
-    <p>No hay propietarios registrados</p>
-    <button mat-raised-button color="primary" (click)="openCreateModal()">
-      Agregar primer propietario
-    </button>
+  <!-- Professional Table -->
+  <div *ngIf="!loading && !error" class="table-wrapper">
+    <table mat-table [dataSource]="propietarios" class="professional-table">
+      
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let propietario"> {{ propietario.id }} </td>
+      </ng-container>
+
+      <!-- Cedula Column -->
+      <ng-container matColumnDef="cedula">
+        <th mat-header-cell *matHeaderCellDef> Cedula </th>
+        <td mat-cell *matCellDef="let propietario"> {{ propietario.cedula }} </td>
+      </ng-container>
+
+      <!-- Primer Nombre Column -->
+      <ng-container matColumnDef="primer_nombre">
+        <th mat-header-cell *matHeaderCellDef> Primer Nombre </th>
+        <td mat-cell *matCellDef="let propietario"> {{ propietario.primer_nombre }} </td>
+      </ng-container>
+
+      <!-- Segundo Nombre Column -->
+      <ng-container matColumnDef="segundo_nombre">
+        <th mat-header-cell *matHeaderCellDef> Segundo Nombre </th>
+        <td mat-cell *matCellDef="let propietario"> {{ propietario.segundo_nombre || '-' }} </td>
+      </ng-container>
+
+      <!-- Apellidos Column -->
+      <ng-container matColumnDef="apellidos">
+        <th mat-header-cell *matHeaderCellDef> Apellidos </th>
+        <td mat-cell *matCellDef="let propietario"> {{ propietario.apellidos }} </td>
+      </ng-container>
+
+      <!-- Direccion Column -->
+      <ng-container matColumnDef="direccion">
+        <th mat-header-cell *matHeaderCellDef> Dirección </th>
+        <td mat-cell *matCellDef="let propietario"> {{ propietario.direccion }} </td>
+      </ng-container>
+
+      <!-- Telefono Column -->
+      <ng-container matColumnDef="telefono">
+        <th mat-header-cell *matHeaderCellDef> Teléfono </th>
+        <td mat-cell *matCellDef="let propietario"> {{ propietario.telefono }} </td>
+      </ng-container>
+
+      <!-- Ciudad Column -->
+      <ng-container matColumnDef="ciudad">
+        <th mat-header-cell *matHeaderCellDef> Ciudad </th>
+        <td mat-cell *matCellDef="let propietario"> {{ propietario.ciudad }} </td>
+      </ng-container>
+
+      <!-- Estado Column -->
+      <ng-container matColumnDef="estado">
+        <th mat-header-cell *matHeaderCellDef> Estado </th>
+        <td mat-cell *matCellDef="let propietario">
+          <span class="status-badge" [ngClass]="propietario.estado">
+            {{ propietario.estado }}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Fecha Registro Column -->
+      <ng-container matColumnDef="fecha_registro">
+        <th mat-header-cell *matHeaderCellDef> Fecha Registro </th>
+        <td mat-cell *matCellDef="let propietario"> {{ propietario.fecha_registro | date:'dd/MM/yyyy' }} </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+        <td mat-cell *matCellDef="let propietario">
+          <button mat-icon-button [matMenuTriggerFor]="menu" [attr.aria-label]="'Menú de acciones para propietario ' + propietario.cedula">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="openEditModal(propietario)">
+              <mat-icon>edit</mat-icon>
+              <span>Editar</span>
+            </button>
+            <button mat-menu-item (click)="viewPropietario(propietario)">
+              <mat-icon>visibility</mat-icon>
+              <span>Ver detalles</span>
+            </button>
+            <button mat-menu-item (click)="deletePropietario(propietario.id)">
+              <mat-icon>delete</mat-icon>
+              <span>Eliminar</span>
+            </button>
+          </mat-menu>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="table-row"></tr>
+    </table>
+
+    <!-- Empty State -->
+    <div *ngIf="propietarios.length === 0" class="no-data">
+      <mat-icon>person_off</mat-icon>
+      <p>No hay propietarios registrados</p>
+      <button mat-raised-button color="primary" (click)="openCreateModal()">
+        Agregar primer propietario
+      </button>
+    </div>
   </div>
 </div>

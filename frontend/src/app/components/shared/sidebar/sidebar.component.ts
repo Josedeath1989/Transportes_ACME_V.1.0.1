@@ -55,8 +55,8 @@ export class SidebarComponent implements OnInit {
 
     // Load conductors count
     this.conductorService.getConductores().subscribe({
-      next: (conductors: Conductor[]) => {
-        this.stats.conductors = conductors.length || 0;
+      next: (response: ApiResponse<Conductor[]>) => {
+        this.stats.conductors = response.data?.length || 0;
       },
       error: (error: any) => {
         console.error('Error loading conductors:', error);

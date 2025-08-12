@@ -1,4 +1,4 @@
-<div class="conductor-list">
+<div class="table-container">
   <div class="header-section">
     <h1>Lista de Conductores</h1>
     <button mat-raised-button color="primary" (click)="openCreateModal()" class="add-button">
@@ -7,55 +7,124 @@
     </button>
   </div>
 
-  <div class="table-container">
-    <table mat-table [dataSource]="conductores" class="mat-elevation-z8">
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner></mat-spinner>
+    <p>Cargando conductores...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error-container">
+    <mat-icon>error</mat-icon>
+    <p>{{ error }}</p>
+    <button mat-raised-button color="primary" (click)="retryLoad()">
+      Reintentar
+    </button>
+  </div>
+
+  <!-- Professional Table -->
+  <div *ngIf="!loading && !error" class="table-wrapper">
+    <table mat-table [dataSource]="conductores" class="professional-table">
       
-      <!-- Nombre Column -->
-      <ng-container matColumnDef="nombre">
-        <th mat-header-cell *matHeaderCellDef> Nombre </th>
-        <td mat-cell *matCellDef="let conductor">
-          {{ conductor.primer_nombre }} {{ conductor.segundo_nombre || '' }} {{ conductor.apellidos }}
-        </td>
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let conductor"> {{ conductor.id }} </td>
       </ng-container>
 
-      <!-- Cédula Column -->
+      <!-- Cedula Column -->
       <ng-container matColumnDef="cedula">
-        <th mat-header-cell *matHeaderCellDef> Cédula </th>
+        <th mat-header-cell *matHeaderCellDef> Cedula </th>
         <td mat-cell *matCellDef="let conductor"> {{ conductor.cedula }} </td>
       </ng-container>
 
-      <!-- Teléfono Column -->
+      <!-- Primer Nombre Column -->
+      <ng-container matColumnDef="primer_nombre">
+        <th mat-header-cell *matHeaderCellDef> Primer Nombre </th>
+        <td mat-cell *matCellDef="let conductor"> {{ conductor.primer_nombre }} </td>
+      </ng-container>
+
+      <!-- Segundo Nombre Column -->
+      <ng-container matColumnDef="segundo_nombre">
+        <th mat-header-cell *matHeaderCellDef> Segundo Nombre </th>
+        <td mat-cell *matCellDef="let conductor"> {{ conductor.segundo_nombre || '-' }} </td>
+      </ng-container>
+
+      <!-- Apellidos Column -->
+      <ng-container matColumnDef="apellidos">
+        <th mat-header-cell *matHeaderCellDef> Apellidos </th>
+        <td mat-cell *matCellDef="let conductor"> {{ conductor.apellidos }} </td>
+      </ng-container>
+
+      <!-- Direccion Column -->
+      <ng-container matColumnDef="direccion">
+        <th mat-header-cell *matHeaderCellDef> Dirección </th>
+        <td mat-cell *matCellDef="let conductor"> {{ conductor.direccion }} </td>
+      </ng-container>
+
+      <!-- Telefono Column -->
       <ng-container matColumnDef="telefono">
         <th mat-header-cell *matHeaderCellDef> Teléfono </th>
         <td mat-cell *matCellDef="let conductor"> {{ conductor.telefono }} </td>
       </ng-container>
 
-      <!-- Email Column -->
-      <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef> Email </th>
-        <td mat-cell *matCellDef="let conductor"> {{ conductor.email }} </td>
+      <!-- Ciudad Column -->
+      <ng-container matColumnDef="ciudad">
+        <th mat-header-cell *matHeaderCellDef> Ciudad </th>
+        <td mat-cell *matCellDef="let conductor"> {{ conductor.ciudad }} </td>
       </ng-container>
 
-      <!-- Acciones Column -->
-      <ng-container matColumnDef="acciones">
-        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+      <!-- Estado Column -->
+      <ng-container matColumnDef="estado">
+        <th mat-header-cell *matHeaderCellDef> Estado </th>
         <td mat-cell *matCellDef="let conductor">
-          <button mat-icon-button color="primary" (click)="openEditModal(conductor)" 
-                  matTooltip="Editar conductor">
-            <mat-icon>edit</mat-icon>
-          </button>
+          <span class="status-badge" [ngClass]="conductor.estado">
+            {{ conductor.estado }}
+          </span>
         </td>
       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="['nombre', 'cedula', 'telefono', 'email', 'acciones']"></tr>
-      <tr mat-row *matRowDef="let row; columns: ['nombre', 'cedula', 'telefono', 'email', 'acciones'];"></tr>
-    </table>
-  </div>
+      <!-- Fecha Registro Column -->
+      <ng-container matColumnDef="fecha_registro">
+        <th mat-header-cell *matHeaderCellDef> Fecha Registro </th>
+        <td mat-cell *matCellDef="let conductor"> {{ conductor.fecha_registro | date:'dd/MM/yyyy' }} </td>
+      </ng-container>
 
-  <div *ngIf="conductores.length === 0" class="no-data">
-    <p>No hay conductores registrados</p>
-    <button mat-raised-button color="primary" (click)="openCreateModal()">
-      Agregar primer conductor
-    </button>
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+        <td mat-cell *matCellDef="let conductor">
+          <button mat-icon-button [matMenuTriggerFor]="menu" [attr.aria-label]="'Menú de acciones para conductor ' + conductor.cedula">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="openEditModal(conductor)">
+              <mat-icon>edit</mat-icon>
+              <span>Editar</span>
+            </button>
+            <button mat-menu-item (click)="viewConductor(conductor)">
+              <mat-icon>visibility</mat-icon>
+              <span>Ver detalles</span>
+            </button>
+            <button mat-menu-item (click)="deleteConductor(conductor.id)">
+              <mat-icon>delete</mat-icon>
+              <span>Eliminar</span>
+            </button>
+          </mat-menu>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="table-row"></tr>
+    </table>
+
+    <!-- Empty State -->
+    <div *ngIf="conductores.length === 0" class="no-data">
+      <mat-icon>person</mat-icon>
+      <p>No hay conductores registrados</p>
+      <button mat-raised-button color="primary" (click)="openCreateModal()">
+        Agregar primer conductor
+      </button>
+    </div>
   </div>
 </div>

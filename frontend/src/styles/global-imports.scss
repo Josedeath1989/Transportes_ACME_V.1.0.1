@@ -1,0 +1,49 @@
+/* Global Styles Import */
+@import 'styles/unified-list-styles.scss';
+@import 'styles/mat-icon-enhancements.scss';
+
+/* Additional global styles */
+html, body { 
+  height: 100%; 
+  margin: 0; 
+  font-family: Roboto, "Helvetica Neue", sans-serif; 
+}
+
+/* Ensure unified styles are available globally */
+.unified-list-container {
+  max-width: 100%;
+}
+
+/* Global mat-icon improvements */
+.mat-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  vertical-align: middle;
+}
+
+/* Ensure proper alignment in buttons */
+button .mat-icon {
+  margin-right: 8px;
+}
+
+/* Fix for mat-icon in tables */
+.mat-table .mat-icon {
+  font-size: 20px;
+  vertical-align: middle;
+}
+
+/* Loading states with icons */
+.loading-container .mat-icon {
+  font-size: 48px;
+  color: #1976d2;
+  margin-bottom: 16px;
+}
+
+/* Error states with icons */
+.error-container .mat-icon {
+  font-size: 48px;
+  color: #f44336;
+  margin-bottom: 16px;
+}

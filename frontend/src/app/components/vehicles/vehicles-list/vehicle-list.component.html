@@ -1,65 +1,130 @@
-<div class="vehicle-list">
-  <div class="header-section">
-    <h1>Lista de Vehículos</h1>
-    <button mat-raised-button color="primary" (click)="openCreateModal()" class="add-button">
-      <mat-icon>add</mat-icon>
-      Agregar Vehículo
+<div class="custom-modal-container modal-lg" role="dialog" aria-modal="true" aria-labelledby="vehicleListModalTitle">
+  <div class="modal-header">
+    <h2 id="vehicleListModalTitle">Lista de Vehículos</h2>
+  </div>
+
+  <div class="modal-content">
+    <div class="header-section">
+      <button mat-raised-button (click)="openCreateModal()" class="add-vehicle-btn">
+        <mat-icon>add_circle</mat-icon>
+        <span>Agregar Vehículo</span>
+      </button>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading-container">
+      <mat-spinner></mat-spinner>
+      <p>Cargando vehículos...</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error && !loading" class="error-container">
+      <mat-icon>error</mat-icon>
+      <p>{{ error }}</p>
+      <button mat-raised-button color="primary" (click)="retryLoad()">
+        Reintentar
+      </button>
+    </div>
+
+    <!-- Professional Table -->
+    <div *ngIf="!loading && !error" class="table-wrapper">
+      <table mat-table [dataSource]="vehicles" class="professional-table">
+        
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let vehicle"> {{ vehicle.id }} </td>
+        </ng-container>
+
+        <!-- Placa Column -->
+        <ng-container matColumnDef="placa">
+          <th mat-header-cell *matHeaderCellDef> Placa </th>
+          <td mat-cell *matCellDef="let vehicle"> {{ vehicle.placa }} </td>
+        </ng-container>
+
+        <!-- Color Column -->
+        <ng-container matColumnDef="color">
+          <th mat-header-cell *matHeaderCellDef> Color </th>
+          <td mat-cell *matCellDef="let vehicle"> {{ vehicle.color }} </td>
+        </ng-container>
+
+        <!-- Marca Column -->
+        <ng-container matColumnDef="marca">
+          <th mat-header-cell *matHeaderCellDef> Marca </th>
+          <td mat-cell *matCellDef="let vehicle"> {{ vehicle.marca }} </td>
+        </ng-container>
+
+        <!-- Tipo Vehiculo Column -->
+        <ng-container matColumnDef="tipo_vehiculo">
+          <th mat-header-cell *matHeaderCellDef> Tipo Vehículo </th>
+          <td mat-cell *matCellDef="let vehicle"> 
+            <span class="badge" [ngClass]="vehicle.tipo_vehiculo">
+              {{ vehicle.tipo_vehiculo }}
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Estado Column -->
+        <ng-container matColumnDef="estado">
+          <th mat-header-cell *matHeaderCellDef> Estado </th>
+          <td mat-cell *matCellDef="let vehicle">
+            <span class="status-badge" [ngClass]="vehicle.estado">
+              {{ vehicle.estado }}
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Fecha Registro Column -->
+        <ng-container matColumnDef="fecha_registro">
+          <th mat-header-cell *matHeaderCellDef> Fecha Registro </th>
+          <td mat-cell *matCellDef="let vehicle"> {{ vehicle.fecha_registro | date:'dd/MM/yyyy' }} </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Acciones </th>
+          <td mat-cell *matCellDef="let vehicle" class="actions-cell">
+            <button class="actions-toggle-btn" (click)="openActionsModal(vehicle)" [attr.aria-label]="'Menú de acciones para vehículo ' + vehicle.placa">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="table-row"></tr>
+      </table>
+
+      <!-- Empty State -->
+      <div *ngIf="vehicles.length === 0" class="no-data">
+        <mat-icon>directions_car</mat-icon>
+        <p>No hay vehículos registrados</p>
+        <button mat-raised-button color="primary" (click)="openCreateModal()">
+          Agregar primer vehículo
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Actions Modal -->
+<div *ngIf="selectedVehicle" class="actions-modal-overlay" (click)="closeActionsModal()"></div>
+<div *ngIf="selectedVehicle" class="actions-modal">
+  <div class="modal-header">
+    <h3>Acciones</h3>
+    <button type="button" class="close-button" aria-label="Cerrar" (click)="closeActionsModal()">&times;</button>
+  </div>
+  <div class="modal-content">
+    <button class="action-btn edit-btn" (click)="openEditModal(selectedVehicle); closeActionsModal()">
+      <mat-icon>edit</mat-icon>
+      <span>Editar</span>
     </button>
-  </div>
-
-  <div class="table-container">
-    <table mat-table [dataSource]="vehicles" class="mat-elevation-z8">
-      
-      <!-- Placa Column -->
-      <ng-container matColumnDef="placa">
-        <th mat-header-cell *matHeaderCellDef> Placa </th>
-        <td mat-cell *matCellDef="let vehicle"> {{ vehicle.placa }} </td>
-      </ng-container>
-
-      <!-- Marca Column -->
-      <ng-container matColumnDef="marca">
-        <th mat-header-cell *matHeaderCellDef> Marca </th>
-        <td mat-cell *matCellDef="let vehicle"> {{ vehicle.marca }} </td>
-      </ng-container>
-
-      <!-- Modelo Column -->
-      <ng-container matColumnDef="modelo">
-        <th mat-header-cell *matHeaderCellDef> Modelo </th>
-        <td mat-cell *matCellDef="let vehicle"> {{ vehicle.modelo }} </td>
-      </ng-container>
-
-      <!-- Año Column -->
-      <ng-container matColumnDef="anio">
-        <th mat-header-cell *matHeaderCellDef> Año </th>
-        <td mat-cell *matCellDef="let vehicle"> {{ vehicle.anio }} </td>
-      </ng-container>
-
-      <!-- Color Column -->
-      <ng-container matColumnDef="color">
-        <th mat-header-cell *matHeaderCellDef> Color </th>
-        <td mat-cell *matCellDef="let vehicle"> {{ vehicle.color }} </td>
-      </ng-container>
-
-      <!-- Acciones Column -->
-      <ng-container matColumnDef="acciones">
-        <th mat-header-cell *matHeaderCellDef> Acciones </th>
-        <td mat-cell *matCellDef="let vehicle">
-          <button mat-icon-button color="primary" (click)="openEditModal(vehicle)" 
-                  matTooltip="Editar vehículo">
-            <mat-icon>edit</mat-icon>
-          </button>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="['placa', 'marca', 'modelo', 'anio', 'color', 'acciones']"></tr>
-      <tr mat-row *matRowDef="let row; columns: ['placa', 'marca', 'modelo', 'anio', 'color', 'acciones'];"></tr>
-    </table>
-  </div>
-
-  <div *ngIf="vehicles.length === 0" class="no-data">
-    <p>No hay vehículos registrados</p>
-    <button mat-raised-button color="primary" (click)="openCreateModal()">
-      Agregar primer vehículo
+    <button class="action-btn view-btn" (click)="viewVehicle(selectedVehicle); closeActionsModal()">
+      <mat-icon>visibility</mat-icon>
+      <span>Ver detalles</span>
+    </button>
+    <button class="action-btn delete-btn" (click)="deleteVehicle(selectedVehicle.id); closeActionsModal()">
+      <mat-icon>delete</mat-icon>
+      <span>Eliminar</span>
     </button>
   </div>
 </div>

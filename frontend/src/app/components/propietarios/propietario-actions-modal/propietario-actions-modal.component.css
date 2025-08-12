@@ -1,0 +1,71 @@
+.actions-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.actions-container button {
+  width: 100%;
+  justify-content: flex-start;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: none;
+}
+
+.actions-container button:hover {
+  filter: brightness(0.9);
+}
+
+.actions-container button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.5);
+}
+
+.actions-container button mat-icon {
+  margin-right: 8px;
+}
+
+.actions-container button[color="primary"] {
+  background-color: #1976d2;
+  color: white;
+}
+
+.actions-container button[color="accent"] {
+  background-color: #0288d1;
+  color: white;
+}
+
+.actions-container button[color="warn"] {
+  background-color: #d32f2f;
+  color: white;
+}
+
+.close-container {
+  text-align: right;
+  margin-top: 8px;
+}
+
+.close-container button {
+  font-weight: 600;
+  color: #1976d2;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.close-container button:hover {
+  background-color: rgba(25, 118, 210, 0.1);
+}
+
+.close-container button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.5);
+}

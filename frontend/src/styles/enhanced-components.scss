@@ -1,0 +1,257 @@
+/* Enhanced Components Styling System */
+/* Modern, professional styling for buttons, modals, and tables */
+
+/* ==========================================
+   BUTTON STYLES
+   ========================================== */
+
+/* Primary Action Buttons */
+.btn-primary {
+  background: linear-gradient(135deg, #1976d2, #1565c0);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  
+  &:hover {
+    background: linear-gradient(135deg, #1565c0, #0d47a1);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(25, 118, 210, 0.4);
+  }
+  
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(25, 118, 210, 0.3);
+  }
+}
+
+/* Secondary Action Buttons */
+.btn-secondary {
+  background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+  color: #424242;
+  border: 1px solid #bdbdbd;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  
+  &:hover {
+    background: linear-gradient(135deg, #eeeeee, #bdbdbd);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Action Buttons in Tables */
+.btn-action {
+  border: none;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 80px;
+  justify-content: center;
+  
+  &.btn-edit {
+    background: linear-gradient(135deg, #ff9800, #f57c00);
+    color: white;
+    
+    &:hover {
+      background: linear-gradient(135deg, #f57c00, #e65100);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+    }
+  }
+  
+  &.btn-view {
+    background: linear-gradient(135deg, #4caf50, #388e3c);
+    color: white;
+    
+    &:hover {
+      background: linear-gradient(135deg, #388e3c, #2e7d32);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+    }
+  }
+  
+  &.btn-delete {
+    background: linear-gradient(135deg, #f44336, #d32f2f);
+    color: white;
+    
+    &:hover {
+      background: linear-gradient(135deg, #d32f2f, #c62828);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
+    }
+  }
+}
+
+/* Icon Buttons */
+.btn-icon {
+  background: transparent;
+  border: none;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #666;
+  
+  &:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: #333;
+    transform: scale(1.1);
+  }
+}
+
+/* ==========================================
+   MODAL STYLES
+   ========================================== */
+
+/* Enhanced Modal Container */
+.enhanced-modal {
+  .modal-dialog {
+    margin: 2rem auto;
+    max-width: 600px;
+    animation: modalSlideIn 0.3s ease-out;
+  }
+  
+  .modal-content {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+  }
+}
+
+/* Modal Header */
+.modal-header-enhanced {
+  background: linear-gradient(135deg, #1976d2, #1565c0);
+  color: white;
+  padding: 1.5rem 2rem;
+  border: none;
+  
+  .modal-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  .close {
+    color: white;
+    opacity: 0.8;
+    font-size: 1.5rem;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+  }
+}
+
+/* Modal Body */
+.modal-body-enhanced {
+  padding: 2rem;
+  background: #fafafa;
+  
+  .form-group {
+    margin-bottom: 1.5rem;
+    
+    label {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+    
+    .form-control {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 0.75rem;
+      transition: all 0.2s ease;
+      
+      &:focus {
+        border-color: #1976d2;
+        box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+      }
+    }
+  }
+}
+
+/* Modal Footer */
+.modal-footer-enhanced {
+  background: #f5f5f5;
+  padding: 1.5rem 2rem;
+  border: none;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+/* ==========================================
+   TABLE ENHANCEMENTS
+   ========================================== */
+
+/* Enhanced Table Container */
+.table-container-enhanced {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  margin: 2rem 0;
+}
+
+/* Enhanced Table Header */
+.table-header-enhanced {
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #dee2e6;
+  
+  h2 {
+    margin: 0;
+    color: #495057;
+    font-weight: I have gathered the current styling details for the vehicle list, propietario list, and modal components. Here is the plan to enhance the styling of buttons and modals in these components:
+
+Information Gathered:
+- Vehicle list component HTML and CSS show a professional table with buttons styled with Angular Material and some custom styles.
+- Propietario list component HTML and CSS have similar structure with action buttons styled with custom classes.
+- Modal component SCSS has a clean, modern style with animations, header, content, and action buttons styled with blue primary color and hover/focus effects.
+
+Plan:
+- Enhance button styles in vehicle-list.component.css and propietario-list.component.css for better visual appeal, including hover, focus, and active states.
+- Refine modal.component.scss to improve button styles inside modals, add subtle shadows, smooth transitions, and consistent color scheme.
+- Add consistent spacing, border-radius, and font styling to buttons and modals.
+- Ensure responsive design is maintained or improved for smaller screens.
+- Optionally add subtle animations or effects to buttons for better UX.
+
+Dependent Files to be edited:
+- frontend/src/app/components/vehicles/vehicles-list/vehicle-list.component.css
+- frontend/src/app/components/propietarios/propietario-list/propietario-list.component.css
+- frontend/src/app/components/shared/modal/modal.component.scss
+
+Followup steps:
+- After editing, test UI in browser to verify improved styling and responsiveness.
+- Adjust styles if needed based on visual feedback.
+
+Please confirm if I can proceed with this styling enhancement plan. If you have any specific style preferences or color schemes, please let me know.
+
+<ask_followup_question>
+<question>Can I proceed with the proposed styling enhancement plan for buttons and modals in vehicle and propietario list components?</question>
+</ask_followup_question>
